@@ -1,5 +1,7 @@
-﻿using Microsoft.Owin.Security;
+﻿using BusinessLogic.Logic;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Presentation.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,9 @@ namespace Presentation.AuthHelpers
     {
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-           context.Validated(); // 
+            string email = context.Parameters.Where(f => f.Key == "email").Select(f => f.Value).SingleOrDefault()[0];
+            context.OwinContext.Set<string>("email", email);
+            context.Validated(); 
         }
 
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
@@ -30,25 +34,25 @@ namespace Presentation.AuthHelpers
 
         }
 
-
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+
+
+            string email = context.OwinContext.Get<string>("email");
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-           // Accounts acc = new Accounts();
+            UserLogic userLogic = new UserLogic();
 
             //Authenticate the user credentials
-            //if (acc.Login(context.UserName, context.Password))
-            if(true)
+            if (userLogic.Find(email, context.Password)!=null)
             {
-             //   identity.AddClaim(new Claim(ClaimTypes.Role, acc.GetUserRole(context.UserName)));
-                identity.AddClaim(new Claim("username", context.UserName));
-                identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Email,email));
                 context.Validated(identity);
             }
             else
             {
-                context.SetError("invalid_grant", "Provided username and password is incorrect");
+                context.SetError("invalid_grant", "Provided email and password is incorrect");
                 return;
             }
         }

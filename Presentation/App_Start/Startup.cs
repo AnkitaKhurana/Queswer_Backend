@@ -25,6 +25,7 @@ namespace Presentation.App_Start
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(60),
                 Provider = myProvider,
                 RefreshTokenProvider = new RefreshTokenProvider()
+              
             };
             app.UseOAuthAuthorizationServer(options);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());

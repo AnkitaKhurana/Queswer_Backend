@@ -46,7 +46,7 @@ namespace Presentation.AuthHelpers
 
         public async Task ReceiveAsync(AuthenticationTokenReceiveContext context)
         {
-            // context.DeserializeTicket(context.Token);
+            context.DeserializeTicket(context.Token);
             AuthenticationTicket ticket;
             string header = context.OwinContext.Request.Headers["Authorization"];
 
