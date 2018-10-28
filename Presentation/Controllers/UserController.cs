@@ -7,16 +7,12 @@ using Shared.DTOs;
 using Shared.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Helpers;
 using System.Web.Http;
 
 namespace Presentation.Controllers
@@ -130,7 +126,35 @@ namespace Presentation.Controllers
             }
             catch (NoSuchUserExists e)
             {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Unauthorized, e.Message);
+                return response;
+            }
+            catch (Exception e)
+            {
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.ServiceUnavailable, e.Message);
+                return response;
+            }
+
+        }
+
+
+        [Authorize]
+        [HttpPut]
+        public HttpResponseMessage Update([System.Web.Mvc.Bind(Include = "Firstname,Lastname,Password")] User userToUpdate)
+        {
+            try
+            {
+                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+                var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+                       .Select(c => c.Value).SingleOrDefault();
+                userToUpdate.Email = email;
+                User user = UserMapper.ToViewModel(userLogic.Update(UserMapper.ToDTO(userToUpdate)));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { user });
+                return response;
+            }
+            catch (NoSuchUserExists e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Unauthorized, e.Message);
                 return response;
             }
             catch (Exception e)

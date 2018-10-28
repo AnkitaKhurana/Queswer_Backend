@@ -56,5 +56,18 @@ namespace BusinessLogic.Logic
             }
         }
 
+        public UserDTO Update(UserDTO user)
+        {
+            try
+            {
+                //Bycrypt password here
+                return userData.UpdateUser(user);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }

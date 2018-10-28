@@ -83,5 +83,34 @@ namespace DataAccess.Data
                 return null;
             }
         }
+
+        public UserDTO UpdateUser(UserDTO userToUpdate)
+        {
+
+            try
+            {
+                User user = db.Users.Where(x => x.Email == userToUpdate.Email).FirstOrDefault();
+                if (user == null)
+                {
+                    throw new NoSuchUserExists();
+                }
+                user.Firstname = userToUpdate.Firstname;
+                user.Lastname = userToUpdate.Lastname;
+                user.Password = userToUpdate.Password;
+                db.SaveChanges();
+                //Support Image here 
+                User userUpdated = db.Users.Where(x => x.Email == userToUpdate.Email).FirstOrDefault();
+                UserDTO userDTO = Map.UserMapper.ToDTO(userUpdated);
+                return userDTO;
+            }
+            catch (NoSuchUserExists)
+            {
+                throw new NoSuchUserExists();
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
