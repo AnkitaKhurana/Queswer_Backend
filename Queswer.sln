@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{0CB07F32-8DEC-4EC6-9E11-203C2769BEED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queswer.Presentation", "Presentation\Queswer.Presentation.csproj", "{0CB07F32-8DEC-4EC6-9E11-203C2769BEED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{63BA86B0-B6D2-4FF4-A42D-CC7BB0796359}"
 EndProject
