@@ -63,6 +63,31 @@ namespace DataAccess.Data
 
         }
 
+        public QuestionDTO Delete(Guid QuestionId)
+        {
+            try
+            {
+                Question question = db.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
+                if (question == null)
+                {
+                    throw new NoSuchQuestionFound();
+                }
+                QuestionDTO questionDTO = QuestionMapper.ToDTO(question);
+                db.Questions.Remove(question);
+                db.SaveChanges();               
+                return questionDTO;
+            }
+            catch (NoSuchQuestionFound)
+            {
+                throw new NoSuchQuestionFound();
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
 
     }
 }

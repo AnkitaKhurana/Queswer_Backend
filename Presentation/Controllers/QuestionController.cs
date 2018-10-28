@@ -102,5 +102,32 @@ namespace Presentation.Controllers
                 return response;
             }
         }
+
+        [HttpDelete]
+        [Authorize]
+        public HttpResponseMessage Delete(Guid Id)
+        {
+            try
+            {
+
+                var question = questionLogic.Delete(Id);
+                if (question == null)
+                {
+                    throw new NoSuchUserExists();
+                }
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { question });
+                return response;
+            }
+            catch (NoSuchQuestionFound e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
     }
 }

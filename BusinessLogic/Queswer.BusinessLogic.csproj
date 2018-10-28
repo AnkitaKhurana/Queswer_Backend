@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+    <ProjectReference Include="..\DataAccess\Queswer.DataAccess.csproj">
       <Project>{c03daebe-59da-416e-a677-08e8fb97a36e}</Project>
-      <Name>DataAccess</Name>
+      <Name>Queswer.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
+    <ProjectReference Include="..\Shared\Queswer.Shared.csproj">
       <Project>{8aadfc0e-9e4a-4a3c-b415-0c1dfc2a21f9}</Project>
-      <Name>Shared</Name>
+      <Name>Queswer.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

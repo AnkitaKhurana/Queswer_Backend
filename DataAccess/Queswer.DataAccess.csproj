@@ -55,13 +55,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
+    <ProjectReference Include="..\Data\Queswer.Data.csproj">
       <Project>{63ba86b0-b6d2-4ff4-a42d-cc7bb0796359}</Project>
-      <Name>Data</Name>
+      <Name>Queswer.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
+    <ProjectReference Include="..\Shared\Queswer.Shared.csproj">
       <Project>{8aadfc0e-9e4a-4a3c-b415-0c1dfc2a21f9}</Project>
-      <Name>Shared</Name>
+      <Name>Queswer.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

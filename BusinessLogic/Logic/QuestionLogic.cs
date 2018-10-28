@@ -29,6 +29,21 @@ namespace BusinessLogic.Logic
             }
         }
 
+        public QuestionDTO Delete(Guid questionID)
+        {
+            try
+            {
+                return questionData.Delete(questionID);
+            }
+            catch (NoSuchQuestionFound)
+            {
+                throw new NoSuchQuestionFound();
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public QuestionDTO Add(QuestionDTO questionDTO)
         {

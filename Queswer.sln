@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queswer.Presentation", "Presentation\Queswer.Presentation.csproj", "{0CB07F32-8DEC-4EC6-9E11-203C2769BEED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{63BA86B0-B6D2-4FF4-A42D-CC7BB0796359}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queswer.Data", "Data\Queswer.Data.csproj", "{63BA86B0-B6D2-4FF4-A42D-CC7BB0796359}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{C03DAEBE-59DA-416E-A677-08E8FB97A36E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queswer.DataAccess", "DataAccess\Queswer.DataAccess.csproj", "{C03DAEBE-59DA-416E-A677-08E8FB97A36E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{FEEF66AE-0543-430E-8712-F01145984B28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queswer.BusinessLogic", "BusinessLogic\Queswer.BusinessLogic.csproj", "{FEEF66AE-0543-430E-8712-F01145984B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{8AADFC0E-9E4A-4A3C-B415-0C1DFC2A21F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queswer.Shared", "Shared\Queswer.Shared.csproj", "{8AADFC0E-9E4A-4A3C-B415-0C1DFC2A21F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Presentation", "1.Presentation", "{07601085-2C46-494C-B416-6935E258D3CC}"
 EndProject

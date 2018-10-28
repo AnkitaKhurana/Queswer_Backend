@@ -317,13 +317,13 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
+    <ProjectReference Include="..\BusinessLogic\Queswer.BusinessLogic.csproj">
       <Project>{feef66ae-0543-430e-8712-f01145984b28}</Project>
-      <Name>BusinessLogic</Name>
+      <Name>Queswer.BusinessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared\Shared.csproj">
+    <ProjectReference Include="..\Shared\Queswer.Shared.csproj">
       <Project>{8aadfc0e-9e4a-4a3c-b415-0c1dfc2a21f9}</Project>
-      <Name>Shared</Name>
+      <Name>Queswer.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
