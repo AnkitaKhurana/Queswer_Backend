@@ -55,7 +55,7 @@ namespace Presentation.Controllers
             }
             catch (UserAlreadyExists e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new  { error = e.Message });
                 return response;
             }
             catch (Exception e)

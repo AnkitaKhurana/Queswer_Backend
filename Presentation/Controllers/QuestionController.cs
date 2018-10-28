@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Presentation.Mapper;
 using Presentation.Models;
 using Shared.DTOs;
+using Shared.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,31 @@ namespace Presentation.Controllers
         private QuestionLogic questionLogic = new QuestionLogic();
         private UserLogic userLogic = new UserLogic();
 
+        [HttpGet]
+        public HttpResponseMessage Find(Guid Id)
+        {
+            try
+            {
+                
+                var question = questionLogic.Find(Id);
+                if (question == null)
+                {
+                    throw new NoSuchUserExists();
+                }
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { question });
+                return response;
+            }
+            catch (NoSuchQuestionFound e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK,new { error=  e.Message });
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
 
         [Authorize]
         [HttpPost]
