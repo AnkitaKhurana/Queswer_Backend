@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Exceptions\NoSuchUserExists.cs" />
+    <Compile Include="Exceptions\UserAlreadyExists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,6 +24,30 @@ namespace DataAccess.Data
 
         }
 
+        public UserDTO Add(UserDTO userDTO)
+        {
+            try
+            {
+                if (db.Users.Where(x=>x.Email == userDTO.Email).FirstOrDefault()!=null)
+                {
+                    throw new UserAlreadyExists();
+                }
+                User user = Map.UserMapper.ToDB(userDTO);
+                db.Users.Add(user);
+                db.SaveChanges();
+                return userDTO;
+            }
+            catch (UserAlreadyExists)
+            {
+                throw new UserAlreadyExists();
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
         public UserDTO Find(string email, string password)
         {
             try

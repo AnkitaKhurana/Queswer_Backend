@@ -45,6 +45,7 @@ namespace Presentation.AuthHelpers
             UserLogic userLogic = new UserLogic();
 
             //Authenticate the user credentials
+            
             if (userLogic.Find(email, context.Password)!=null)
             {
                 identity.AddClaim(new Claim(ClaimTypes.Email,email));

@@ -18,5 +18,6 @@ namespace Presentation.Models
         public string Password { get; set; }
         public string Image { get; set; }
         public int FollowCount { get; set; }
+        public string Token { get; set; }
     }
 }
