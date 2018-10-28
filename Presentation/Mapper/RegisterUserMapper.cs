@@ -25,7 +25,7 @@ namespace Presentation.Mapper
         {
             UserDTO userDTO = new UserDTO()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Empty,
                 Email = user.Email,
                 Password = user.Password,
                 Firstname = user.Firstname,
