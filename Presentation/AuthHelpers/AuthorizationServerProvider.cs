@@ -17,7 +17,7 @@ namespace Presentation.AuthHelpers
         {
             string email = context.Parameters.Where(f => f.Key == "email").Select(f => f.Value).SingleOrDefault()[0];
             context.OwinContext.Set<string>("email", email);
-            context.Validated(); 
+            context.Validated();
         }
 
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
@@ -45,10 +45,10 @@ namespace Presentation.AuthHelpers
             UserLogic userLogic = new UserLogic();
 
             //Authenticate the user credentials
-            
-            if (userLogic.Find(email, context.Password)!=null)
+
+            if (userLogic.Find(email, context.Password) != null)
             {
-                identity.AddClaim(new Claim(ClaimTypes.Email,email));
+                identity.AddClaim(new Claim(ClaimTypes.Email, email));
                 context.Validated(identity);
             }
             else

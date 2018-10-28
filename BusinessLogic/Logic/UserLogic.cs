@@ -13,12 +13,24 @@ namespace BusinessLogic.Logic
     {
         private UserData userData = new UserData();
 
+        public UserDTO Find(string email)
+        {
+            try
+            {
+                return userData.FindUser(email);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public UserDTO Find(string email, string password)
         {
             try
             {
                 // Decrypt Password here 
-               return userData.FindUser(email, password);
+                return userData.FindUser(email, password);
             }
             catch
             {
