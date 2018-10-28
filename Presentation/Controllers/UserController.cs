@@ -26,7 +26,7 @@ namespace Presentation.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (userToRegister != null &&  ModelState.IsValid)
                 {
                     UserDTO userDTO = RegisterUserMapper.ToDTO(userToRegister);
                     var user = userLogic.Register(userDTO);

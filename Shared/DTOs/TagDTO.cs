@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Models
+namespace Shared.DTOs
 {
-    public class Tag
+    public class TagDTO
     {
-        public Tag()
+        public TagDTO()
         {
-            Questions = new List<Question>();
+            Questions = new List<QuestionDTO>();
         }
         public Guid Id { get; set; }
         public string Body { get; set; }
-
-        public virtual ICollection<Question> Questions { get; set; }
-
+        public List<QuestionDTO> Questions { get;set;}
     }
 }

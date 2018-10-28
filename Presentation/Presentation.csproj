@@ -214,13 +214,18 @@
     <Compile Include="AuthHelpers\AuthorizationServerProvider.cs" />
     <Compile Include="AuthHelpers\RefreshTokenProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapper\QuestionMapper.cs" />
     <Compile Include="Mapper\RegisterUserMapper.cs" />
+    <Compile Include="Mapper\TagMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,7 +10,9 @@ namespace Data.Models
     {
         public User()
         {
-            this.FollowCount = 0;   
+            this.FollowCount = 0;
+            this.Questions = new List<Question>();
+            this.Answers = new List<Answer>();
         }
         public Guid Id { get; set; }
         public string Email { get; set; }
@@ -19,6 +21,10 @@ namespace Data.Models
         public string Password { get; set; }
         public string Image { get; set; }      
         public int FollowCount { get; set; }
+
+        public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
+
 
     }
 }

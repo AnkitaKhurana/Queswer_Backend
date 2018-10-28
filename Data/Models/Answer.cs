@@ -26,7 +26,7 @@ namespace Data.Models
         public Guid AuthorId { get; set; }
         public virtual User Author { get; set; }
 
-        public virtual List<Vote> Voters { get; set; }
+        public virtual ICollection<Vote> Voters { get; set; }
 
     }
 }

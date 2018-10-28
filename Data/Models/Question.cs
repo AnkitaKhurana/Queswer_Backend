@@ -22,7 +22,7 @@ namespace Data.Models
         public Guid AuthorId { get; set; }
         public virtual User Author { get; set; }
 
-        public virtual List<Tag> Tags { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
 
     }
 }

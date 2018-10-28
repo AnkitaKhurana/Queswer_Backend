@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Data.Models
+namespace Presentation.Models
 {
     public class Tag
     {
@@ -14,8 +13,6 @@ namespace Data.Models
         }
         public Guid Id { get; set; }
         public string Body { get; set; }
-
-        public virtual ICollection<Question> Questions { get; set; }
-
+        public List<Question> Questions { get; set; }
     }
 }

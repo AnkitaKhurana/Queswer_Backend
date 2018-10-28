@@ -55,6 +55,18 @@
     <Compile Include="Migrations\201810280656582_QuestionImage.Designer.cs">
       <DependentUpon>201810280656582_QuestionImage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810281152590_QuesAnswerList.cs" />
+    <Compile Include="Migrations\201810281152590_QuesAnswerList.Designer.cs">
+      <DependentUpon>201810281152590_QuesAnswerList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810281304467_Icollection.cs" />
+    <Compile Include="Migrations\201810281304467_Icollection.Designer.cs">
+      <DependentUpon>201810281304467_Icollection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810281312225_DeleteIcollectionInitialisation.cs" />
+    <Compile Include="Migrations\201810281312225_DeleteIcollectionInitialisation.Designer.cs">
+      <DependentUpon>201810281312225_DeleteIcollectionInitialisation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Follow.cs" />
@@ -78,6 +90,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810280656582_QuestionImage.resx">
       <DependentUpon>201810280656582_QuestionImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810281152590_QuesAnswerList.resx">
+      <DependentUpon>201810281152590_QuesAnswerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810281304467_Icollection.resx">
+      <DependentUpon>201810281304467_Icollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810281312225_DeleteIcollectionInitialisation.resx">
+      <DependentUpon>201810281312225_DeleteIcollectionInitialisation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

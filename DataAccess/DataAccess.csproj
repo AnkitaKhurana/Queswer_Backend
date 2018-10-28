@@ -47,7 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\QuestionData.cs" />
     <Compile Include="Data\UserData.cs" />
+    <Compile Include="Map\QuestionMapper.cs" />
+    <Compile Include="Map\TagMapper.cs" />
     <Compile Include="Map\UserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\QuestionDTO.cs" />
+    <Compile Include="DTOs\TagDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
+    <Compile Include="Exceptions\NoSuchQuestionFound.cs" />
     <Compile Include="Exceptions\NoSuchUserExists.cs" />
     <Compile Include="Exceptions\UserAlreadyExists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

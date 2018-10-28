@@ -30,8 +30,7 @@ namespace DataAccess.Map
             UserDTO userDTO = new UserDTO()
             {
                 Id = user.Id,
-                Email = user.Email,
-                Password = user.Password,
+                Email = user.Email,                
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
                 FollowCount = user.FollowCount,
