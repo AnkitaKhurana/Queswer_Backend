@@ -81,5 +81,26 @@ namespace BusinessLogic.Logic
                 return null;
             }
         }
+
+        /// <summary>
+        /// Edit Question function
+        /// </summary>
+        /// <param name="questionDTO"></param>
+        /// <returns></returns>
+        public QuestionDTO Edit(QuestionDTO questionDTO)
+        {
+            try
+            {
+                return questionData.Edit(questionDTO);
+            }
+            catch (NoSuchQuestionFound)
+            {
+                throw new NoSuchQuestionFound();
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

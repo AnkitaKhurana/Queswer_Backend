@@ -165,5 +165,41 @@ namespace Presentation.Controllers
                 return response;
             }
         }
+
+        /// <summary>
+        /// Edit question
+        /// </summary>
+        /// <param name="question"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize]
+        public HttpResponseMessage Edit(Question question,Guid Id )
+        {
+            try
+            {
+                question.Id = Id;
+                QuestionDTO questionToEdit  = QuestionMapper.ToDTO(question);
+                questionToEdit.Tags = SetTags(question.Tags);
+                QuestionDTO questionDTO = questionLogic.Edit(questionToEdit);
+                if (questionDTO == null)
+                {
+                    throw new NoSuchUserExists();
+                }
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questionDTO });
+                return response;
+            }
+            catch (NoSuchQuestionFound e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
+
     }
 }
