@@ -13,6 +13,8 @@ namespace Data.Models
             Questions = new List<Question>();
         }
         public Guid Id { get; set; }
+
+        [Unique]
         public string Body { get; set; }
 
         public virtual ICollection<Question> Questions { get; set; }

@@ -52,13 +52,23 @@ namespace DataAccess.Data
             try
             {
                 Question question = QuestionMapper.ToDB(questionDTO);
-                var questionAdded = db.Questions.Add(question);
-
-                foreach (var tag in questionAdded.Tags)
+                question.Tags = new List<Tag>();
+                foreach (var tag in questionDTO.Tags)
                 {
                     tag.Id = Guid.NewGuid();
-                    db.Tags.Add(tag);
+                    var currentTag = db.Tags.Where(x => x.Body == tag.Body).FirstOrDefault();
+                    if(currentTag == null)
+                    {
+                        var tagsaved = db.Tags.Add(TagMapper.ToDB(tag));
+                        question.Tags.Add(tagsaved);
+                    }
+                    else
+                    {
+                        question.Tags.Add(currentTag);
+                    }
                 }
+                
+                var questionAdded = db.Questions.Add(question);
                 db.SaveChanges();
                 var questionFound = db.Questions
                  .Include("Author")
@@ -118,18 +128,28 @@ namespace DataAccess.Data
                 if(questionFound == null)
                 {
                     throw new NoSuchQuestionFound();
-
                 }
                 questionFound.Description = questionDTO.Description;
                 questionFound.Title = questionDTO.Title;
-                questionFound.Tags = new List<Tag>();
-                foreach(var tag in questionDTO.Tags)
+                List<Tag> tags  = new List<Tag>();
+                foreach (var tag in questionDTO.Tags)
                 {
-                    questionFound.Tags.Add(TagMapper.ToDB(tag));
+                    tag.Id = Guid.NewGuid();
+                    var currentTag = db.Tags.Where(x => x.Body == tag.Body).FirstOrDefault();
+                    if (currentTag == null)
+                    {
+                        var tagsaved = db.Tags.Add(TagMapper.ToDB(tag));
+                        tags.Add(tagsaved);
+                    }
+                    else
+                    {
+                        tags.Add(currentTag);
+                    }
                 }
+                questionFound.Tags = tags;
                 questionFound.Image = questionDTO.Image;
                 questionFound.EditDate = DateTime.Now;
-                questionUpdated = QuestionMapper.ToDTO(questionFound);
+                questionUpdated = QuestionMapper.ToDTO(questionFound);               
                 db.SaveChanges();
                 return questionUpdated;
             }

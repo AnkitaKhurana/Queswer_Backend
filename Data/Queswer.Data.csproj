@@ -71,12 +71,17 @@
     <Compile Include="Migrations\201810290454503_AddDateColumnstoTables.Designer.cs">
       <DependentUpon>201810290454503_AddDateColumnstoTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810290918227_UniqueTag.cs" />
+    <Compile Include="Migrations\201810290918227_UniqueTag.Designer.cs">
+      <DependentUpon>201810290918227_UniqueTag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Follow.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\QueswerContext.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\UniqueAttribute.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810290454503_AddDateColumnstoTables.resx">
       <DependentUpon>201810290454503_AddDateColumnstoTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290918227_UniqueTag.resx">
+      <DependentUpon>201810290918227_UniqueTag.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
