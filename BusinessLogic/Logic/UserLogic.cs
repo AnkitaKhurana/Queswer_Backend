@@ -16,7 +16,6 @@ namespace BusinessLogic.Logic
         private UserData userData = new UserData();
         private string mySalt = BCrypt.Net.BCrypt.GenerateSalt();
 
-
         /// <summary>
         /// Find user by email 
         /// </summary>
