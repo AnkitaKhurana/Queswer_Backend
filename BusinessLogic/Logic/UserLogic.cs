@@ -2,16 +2,19 @@
 using Shared.DTOs;
 using Shared.Exceptions;
 using System;
+using BCrypt.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLogic.Helpers;
 
 namespace BusinessLogic.Logic
 {
     public class UserLogic
     {
         private UserData userData = new UserData();
+        private string mySalt = BCrypt.Net.BCrypt.GenerateSalt();
 
 
         /// <summary>
@@ -42,8 +45,23 @@ namespace BusinessLogic.Logic
         {
             try
             {
-                // Decrypt Password here 
-                return userData.FindUser(email, password);
+                var userFound = userData.FindUser(email);
+
+                if (userFound != null)
+                {
+                    if (Hashing.ValidatePassword(password, userFound.Password))
+                    {
+                        return userFound;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch
             {
@@ -61,7 +79,7 @@ namespace BusinessLogic.Logic
             try
             {
                 userDTO.Id = Guid.NewGuid();
-                // Bycrypt Password here 
+                userDTO.Password = Hashing.HashPassword(userDTO.Password);
                 return userData.Add(userDTO);
             }
             catch (UserAlreadyExists)
@@ -83,7 +101,7 @@ namespace BusinessLogic.Logic
         {
             try
             {
-                //Bycrypt password here
+                user.Password = Hashing.HashPassword(user.Password);
                 return userData.UpdateUser(user);
             }
             catch
