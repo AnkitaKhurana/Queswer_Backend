@@ -21,6 +21,7 @@ namespace Presentation.Controllers
     {
         private UserLogic userLogic = new UserLogic();
 
+        [Route("register")]
         [HttpPost]
         public HttpResponseMessage Register(UserRegister userToRegister)
         {
@@ -65,10 +66,10 @@ namespace Presentation.Controllers
             }
         }
 
-
+        // make constants
         private string Token(User model)
         {
-            string token = "";
+            string token = string.Empty;
             var request = HttpContext.Current.Request;
             var tokenServiceUrl = request.Url.GetLeftPart(UriPartial.Authority) + request.ApplicationPath + "token";
             using (WebClient client = new WebClient())

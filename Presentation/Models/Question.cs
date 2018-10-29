@@ -20,6 +20,8 @@ namespace Presentation.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public string Image { get; set; }
+        public DateTime UploadDate { get; set; }
+        public DateTime EditDate { get; set; }
         public User Author { get; set; }
         public  List<string> Tags { get; set; }
     }

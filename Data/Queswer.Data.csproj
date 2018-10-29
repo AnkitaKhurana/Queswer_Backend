@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201810281312225_DeleteIcollectionInitialisation.Designer.cs">
       <DependentUpon>201810281312225_DeleteIcollectionInitialisation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810290454503_AddDateColumnstoTables.cs" />
+    <Compile Include="Migrations\201810290454503_AddDateColumnstoTables.Designer.cs">
+      <DependentUpon>201810290454503_AddDateColumnstoTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Follow.cs" />
@@ -99,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810281312225_DeleteIcollectionInitialisation.resx">
       <DependentUpon>201810281312225_DeleteIcollectionInitialisation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290454503_AddDateColumnstoTables.resx">
+      <DependentUpon>201810290454503_AddDateColumnstoTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

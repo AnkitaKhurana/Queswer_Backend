@@ -19,6 +19,8 @@ namespace Presentation.Mapper
                 Description = questionDTO.Description,
                 Image = questionDTO.Image,              
                 Author = UserMapper.ToViewModel(questionDTO.Author),
+                UploadDate = questionDTO.UploadDate,
+                EditDate = questionDTO.EditDate
             };
 
             return question;
@@ -32,7 +34,9 @@ namespace Presentation.Mapper
                 Id = question.Id,
                 Title = question.Title,
                 Description = question.Description,
-                Image = question.Image,               
+                Image = question.Image,          
+                UploadDate = question.UploadDate,
+                EditDate = question.EditDate
             };
 
             return questionDTO;

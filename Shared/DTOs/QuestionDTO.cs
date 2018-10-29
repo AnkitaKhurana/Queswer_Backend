@@ -17,6 +17,8 @@ namespace Shared.DTOs
         public string Description { get; set; }
         public string Image { get; set; }
         public UserDTO Author { get; set; }
+        public DateTime UploadDate { get; set; }
+        public DateTime EditDate { get; set; }
 
         public virtual List<TagDTO> Tags { get; set; }
     }

@@ -25,7 +25,9 @@ namespace DataAccess.Map
                 Description = questionDTO.Description,
                 AuthorId = questionDTO.Author.Id,
                 Image = questionDTO.Image,
-                Tags = tags               
+                Tags = tags,
+                UploadDate = questionDTO.UploadDate,
+                EditDate = questionDTO.EditDate
             };
 
             return question;
@@ -47,6 +49,8 @@ namespace DataAccess.Map
                 Image = question.Image,
                 Tags = tags,
                 Author = UserMapper.ToDTO(question.Author),
+                UploadDate = question.UploadDate,
+                EditDate = question.EditDate
             };
 
             return questionDTO;

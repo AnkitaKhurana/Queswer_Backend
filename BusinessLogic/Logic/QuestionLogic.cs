@@ -50,6 +50,8 @@ namespace BusinessLogic.Logic
             try
             {
                 questionDTO.Id = Guid.NewGuid();
+                questionDTO.UploadDate = DateTime.Now;
+                questionDTO.EditDate = questionDTO.UploadDate;
                 return questionData.Add(questionDTO);
             }
             catch (NoSuchQuestionFound)

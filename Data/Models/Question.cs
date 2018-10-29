@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace Data.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public DateTime UploadDate { get; set; }
+        public DateTime EditDate { get; set; }
 
         [ForeignKey("Author")]
         public Guid AuthorId { get; set; }

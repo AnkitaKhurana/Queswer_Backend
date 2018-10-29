@@ -17,6 +17,8 @@ namespace Data.Models
         public string Body { get; set; }
         public int UpvoteCount { get; set; }
         public int DownvoteCount { get; set; }
+        public DateTime UploadDate { get; set; }
+        public DateTime EditDate { get; set; }
 
         [ForeignKey("Question")]
         public Guid QuestionId { get; set; }

@@ -10,7 +10,7 @@ namespace Data.Models
     public class Vote
     {
         public Guid Id { get; set; }
-        public int Status { get; set; }
+        public int Status { get; set; } //ENUM {UPVOTE : DOWNVOTE}
 
 
         [ForeignKey("User")]
