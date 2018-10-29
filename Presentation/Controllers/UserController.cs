@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
+using Shared.Constants;
 
 namespace Presentation.Controllers
 {
@@ -21,13 +22,18 @@ namespace Presentation.Controllers
     {
         private UserLogic userLogic = new UserLogic();
 
-        [Route("register")]
+
+        /// <summary>
+        /// Register new user account 
+        /// </summary>
+        /// <param name="userToRegister"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Register(UserRegister userToRegister)
         {
             try
             {
-                if (userToRegister != null &&  ModelState.IsValid)
+                if (userToRegister != null && ModelState.IsValid)
                 {
                     UserDTO userDTO = RegisterUserMapper.ToDTO(userToRegister);
                     var user = userLogic.Register(userDTO);
@@ -56,7 +62,7 @@ namespace Presentation.Controllers
             }
             catch (UserAlreadyExists e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new  { error = e.Message });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
                 return response;
             }
             catch (Exception e)
@@ -66,7 +72,11 @@ namespace Presentation.Controllers
             }
         }
 
-        // make constants
+        /// <summary>
+        /// Request for Token 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         private string Token(User model)
         {
             string token = string.Empty;
@@ -74,15 +84,20 @@ namespace Presentation.Controllers
             var tokenServiceUrl = request.Url.GetLeftPart(UriPartial.Authority) + request.ApplicationPath + "token";
             using (WebClient client = new WebClient())
             {
-                client.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                token = client.UploadString(tokenServiceUrl, "POST", "grant_type=password&email=" + model.Email + "&password=" + model.Password);
+                client.Headers.Add(RequestConstants.CONTENT_TYPE, RequestConstants.FORM_TYPE);
+                token = client.UploadString(tokenServiceUrl, RequestConstants.POST, AuthConstants.GenerateRequest(model.Email, model.Password));
             }
             Console.Write(token);
             JObject json = JObject.Parse(token);
-            token = json["access_token"].ToString();
+            token = json[AuthConstants.ACCESS_TOKEN].ToString();
             return (token);
         }
 
+        /// <summary>
+        /// Login User
+        /// </summary>
+        /// <param name="userToLogin"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage Login(User userToLogin)
         {
@@ -111,9 +126,13 @@ namespace Presentation.Controllers
 
         }
 
+        /// <summary>
+        /// Return current logged in user profile
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage Me()
+        public HttpResponseMessage Profile()
         {
             try
             {
@@ -138,17 +157,19 @@ namespace Presentation.Controllers
 
         }
 
-
+        /// <summary>
+        /// Update current user account 
+        /// </summary>
+        /// <param name="userToUpdate"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut]
         public HttpResponseMessage Update([System.Web.Mvc.Bind(Include = "Firstname,Lastname,Password")] User userToUpdate)
         {
             try
             {
-                var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-                var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
-                       .Select(c => c.Value).SingleOrDefault();
-                userToUpdate.Email = email;
+
+                userToUpdate.Email = CurrentEmail();
                 User user = UserMapper.ToViewModel(userLogic.Update(UserMapper.ToDTO(userToUpdate)));
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { user });
                 return response;
@@ -163,6 +184,19 @@ namespace Presentation.Controllers
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.ServiceUnavailable, e.Message);
                 return response;
             }
+
+        }
+
+        /// <summary>
+        /// Returns the Email Id of Current Logged in user
+        /// </summary>
+        /// <returns></returns>
+        private string CurrentEmail()
+        {
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+                   .Select(c => c.Value).SingleOrDefault();
+            return email;
 
         }
 

@@ -14,6 +14,11 @@ namespace DataAccess.Data
     {
         private QueswerContext db = new QueswerContext();
 
+        /// <summary>
+        /// Find Question by Id 
+        /// </summary>
+        /// <param name="QuestionId"></param>
+        /// <returns></returns>
         public QuestionDTO Find(Guid QuestionId)
         {
             try
@@ -37,12 +42,17 @@ namespace DataAccess.Data
 
         }
 
+        /// <summary>
+        /// Add new Question 
+        /// </summary>
+        /// <param name="questionDTO"></param>
+        /// <returns></returns>
         public QuestionDTO Add(QuestionDTO questionDTO)
         {
             try
             {
                 Question question = QuestionMapper.ToDB(questionDTO);
-                var questionAdded = db.Questions.Add(question);           
+                var questionAdded = db.Questions.Add(question);
 
                 foreach (var tag in questionAdded.Tags)
                 {
@@ -63,6 +73,11 @@ namespace DataAccess.Data
 
         }
 
+        /// <summary>
+        /// Delete question by Id 
+        /// </summary>
+        /// <param name="QuestionId"></param>
+        /// <returns></returns>
         public QuestionDTO Delete(Guid QuestionId)
         {
             try
@@ -74,7 +89,7 @@ namespace DataAccess.Data
                 }
                 QuestionDTO questionDTO = QuestionMapper.ToDTO(question);
                 db.Questions.Remove(question);
-                db.SaveChanges();               
+                db.SaveChanges();
                 return questionDTO;
             }
             catch (NoSuchQuestionFound)

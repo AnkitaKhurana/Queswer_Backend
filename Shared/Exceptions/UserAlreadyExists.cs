@@ -9,7 +9,7 @@ namespace Shared.Exceptions
     public class UserAlreadyExists : Exception
     {
         public UserAlreadyExists()
-        : base(String.Format("UserName Already Exists"))
+        : base(String.Format("Email Already Exists"))
         {
 
         }

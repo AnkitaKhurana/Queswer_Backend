@@ -20,12 +20,51 @@ namespace Presentation.Controllers
         private QuestionLogic questionLogic = new QuestionLogic();
         private UserLogic userLogic = new UserLogic();
 
+        /// <summary>
+        /// Returns the Email Id of Current Logged in user
+        /// </summary>
+        /// <returns></returns>
+        private string CurrentEmail()
+        {
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+                   .Select(c => c.Value).SingleOrDefault();
+            return email;
+
+        }
+
+        /// <summary>
+        /// Set tags from string to DTO
+        /// </summary>
+        /// <param name="stringTags"></param>
+        /// <returns></returns>
+        private List<TagDTO> SetTags(List<string> stringTags)
+        {
+
+            List<TagDTO> tags = new List<TagDTO>();
+            foreach (var tagstring in stringTags)
+            {
+                tags.Add(new TagDTO()
+                {
+                    Body = tagstring,
+                    Id = Guid.NewGuid()
+
+                });
+            }
+            return tags;
+        }
+
+        /// <summary>
+        /// Find Question Via Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage Find(Guid Id)
         {
             try
             {
-                
+
                 var question = questionLogic.Find(Id);
                 if (question == null)
                 {
@@ -36,7 +75,7 @@ namespace Presentation.Controllers
             }
             catch (NoSuchQuestionFound e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK,new { error=  e.Message });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
                 return response;
             }
             catch (Exception e)
@@ -46,6 +85,11 @@ namespace Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Add new question
+        /// </summary>
+        /// <param name="questionToAdd"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public HttpResponseMessage Add(Question questionToAdd)
@@ -54,22 +98,10 @@ namespace Presentation.Controllers
             {
                 if (questionToAdd != null && ModelState.IsValid)
                 {
-                    List<TagDTO> tags = new List<TagDTO>(); 
-                    foreach(var tagstring in questionToAdd.Tags)
-                    {
-                        tags.Add(new TagDTO()
-                        {
-                            Body = tagstring,
-                            Id = Guid.NewGuid()
-                            
-                        });
-                    }
-                    
+
                     QuestionDTO questionDTO = QuestionMapper.ToDTO(questionToAdd);
-                    questionDTO.Tags = tags;
-                    var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
-                    var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
-                           .Select(c => c.Value).SingleOrDefault();
+                    questionDTO.Tags = SetTags(questionToAdd.Tags);
+                    var email = CurrentEmail();
                     UserDTO author = userLogic.Find(email);
                     questionDTO.Author = author;
                     var question = questionLogic.Add(questionDTO);
@@ -95,7 +127,7 @@ namespace Presentation.Controllers
                     return Request.CreateResponse(HttpStatusCode.Forbidden, JsonConvert.DeserializeObject(jsonerrors));
                 }
 
-            }            
+            }
             catch (Exception e)
             {
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
@@ -103,13 +135,17 @@ namespace Presentation.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete Question 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Authorize]
         public HttpResponseMessage Delete(Guid Id)
         {
             try
             {
-
                 var question = questionLogic.Delete(Id);
                 if (question == null)
                 {

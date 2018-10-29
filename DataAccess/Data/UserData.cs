@@ -9,6 +9,13 @@ namespace DataAccess.Data
     {
         private QueswerContext db = new QueswerContext();
 
+
+        /// <summary>
+        /// Find User by Email Password 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public UserDTO FindUser(string email, string password)
         {
             try
@@ -24,6 +31,12 @@ namespace DataAccess.Data
 
         }
 
+
+        /// <summary>
+        /// Find User Via Email 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public UserDTO FindUser(string email)
         {
             try
@@ -38,6 +51,12 @@ namespace DataAccess.Data
             }
         }
 
+
+        /// <summary>
+        /// Add new User 
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
         public UserDTO Add(UserDTO userDTO)
         {
             try
@@ -62,6 +81,13 @@ namespace DataAccess.Data
 
         }
 
+
+        /// <summary>
+        /// Find User by user and password 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public UserDTO Find(string email, string password)
         {
             try
@@ -84,6 +110,12 @@ namespace DataAccess.Data
             }
         }
 
+
+        /// <summary>
+        /// Update existing user 
+        /// </summary>
+        /// <param name="userToUpdate"></param>
+        /// <returns></returns>
         public UserDTO UpdateUser(UserDTO userToUpdate)
         {
 

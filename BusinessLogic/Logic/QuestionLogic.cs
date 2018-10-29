@@ -13,6 +13,12 @@ namespace BusinessLogic.Logic
     {
         private QuestionData questionData = new QuestionData();
 
+
+        /// <summary>
+        /// Find Question
+        /// </summary>
+        /// <param name="questionID"></param>
+        /// <returns></returns>
         public QuestionDTO Find(Guid questionID)
         {
             try
@@ -29,6 +35,12 @@ namespace BusinessLogic.Logic
             }
         }
 
+
+        /// <summary>
+        /// Delete Question
+        /// </summary>
+        /// <param name="questionID"></param>
+        /// <returns></returns>
         public QuestionDTO Delete(Guid questionID)
         {
             try
@@ -45,6 +57,12 @@ namespace BusinessLogic.Logic
             }
         }
 
+
+        /// <summary>
+        /// Add new question
+        /// </summary>
+        /// <param name="questionDTO"></param>
+        /// <returns></returns>
         public QuestionDTO Add(QuestionDTO questionDTO)
         {
             try

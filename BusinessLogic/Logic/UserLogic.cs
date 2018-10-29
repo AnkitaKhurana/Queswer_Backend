@@ -13,6 +13,12 @@ namespace BusinessLogic.Logic
     {
         private UserData userData = new UserData();
 
+
+        /// <summary>
+        /// Find user by email 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public UserDTO Find(string email)
         {
             try
@@ -25,6 +31,13 @@ namespace BusinessLogic.Logic
             }
         }
 
+
+        /// <summary>
+        /// Find user by email and password 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public UserDTO Find(string email, string password)
         {
             try
@@ -38,6 +51,11 @@ namespace BusinessLogic.Logic
             }
         }
 
+        /// <summary>
+        /// Register new user 
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
         public UserDTO Register(UserDTO userDTO)
         {
             try
@@ -56,6 +74,11 @@ namespace BusinessLogic.Logic
             }
         }
 
+        /// <summary>
+        /// Update User Details 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public UserDTO Update(UserDTO user)
         {
             try

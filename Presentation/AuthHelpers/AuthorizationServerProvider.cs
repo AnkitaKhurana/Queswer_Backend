@@ -13,6 +13,12 @@ namespace Presentation.AuthHelpers
 {
     public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+
+        /// <summary>
+        /// Validate Client Authentication
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             string email = context.Parameters.Where(f => f.Key == "email").Select(f => f.Value).SingleOrDefault()[0];
@@ -20,6 +26,12 @@ namespace Presentation.AuthHelpers
             context.Validated();
         }
 
+
+        /// <summary>
+        /// Grant Refresh Token
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
         {
 
@@ -34,6 +46,12 @@ namespace Presentation.AuthHelpers
 
         }
 
+
+        /// <summary>
+        /// Grant Resource Owner Credentials
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
