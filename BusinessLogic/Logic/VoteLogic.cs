@@ -51,6 +51,43 @@ namespace BusinessLogic.Logic
             }
         }
 
+        /// <summary>
+        /// Un Up vote
+        /// </summary>
+        /// <param name="voterId"></param>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO UnUpvote(Guid voterId, Guid answerId)
+        {
+            try
+            {
+                return voteData.UnUpVote(voterId, answerId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Un Down vote
+        /// </summary>
+        /// <param name="voterId"></param>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO UnDownvote(Guid voterId, Guid answerId)
+        {
+            try
+            {
+                return voteData.UnDownVote(voterId, answerId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
     }
 }

@@ -27,7 +27,7 @@ namespace DataAccess.Data
                 AnswerDTO answerDTO = new AnswerDTO();
                 Answer answerFound = db.Answers.Where(x => x.Id == answerId).FirstOrDefault();
 
-                var voteColumn = db.Voters.Where(x => x.AnswerId == answerId && x.UserId == voterId).FirstOrDefault();
+                Vote voteColumn = db.Voters.Where(x => x.AnswerId == answerId && x.UserId == voterId).FirstOrDefault();
                 if (voteColumn == null)
                 {
                     answerFound.UpvoteCount++;
@@ -45,6 +45,8 @@ namespace DataAccess.Data
                     if (voteColumn.Status == (int)EntityConstants.VOTE.Upvote)
                     {
                         answerDTO = AnswerMapper.ToDTO(answerFound);
+                        answerDTO.Upvoted = true;
+                        answerDTO.Downvoted = false;
                         return answerDTO;
                     }
                     else if (voteColumn.Status == (int)EntityConstants.VOTE.Downvote)
@@ -60,7 +62,7 @@ namespace DataAccess.Data
                 answerDTO.Downvoted = false;
                 return answerDTO;
             }
-            catch 
+            catch
             {
                 return null;
             }
@@ -99,6 +101,8 @@ namespace DataAccess.Data
                     if (voteColumn.Status == (int)EntityConstants.VOTE.Downvote)
                     {
                         answerDTO = AnswerMapper.ToDTO(answerFound);
+                        answerDTO.Upvoted = false;
+                        answerDTO.Downvoted = true;
                         return answerDTO;
                     }
                     else if (voteColumn.Status == (int)EntityConstants.VOTE.Upvote)
@@ -112,6 +116,100 @@ namespace DataAccess.Data
                 answerDTO = AnswerMapper.ToDTO(answerFound);
                 answerDTO.Upvoted = false;
                 answerDTO.Downvoted = true;
+                return answerDTO;
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Un Up vote
+        /// </summary>
+        /// <param name="voterId"></param>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO UnUpVote(Guid voterId, Guid answerId)
+        {
+            try
+            {
+                AnswerDTO answerDTO = new AnswerDTO();
+                Answer answerFound = db.Answers.Where(x => x.Id == answerId).FirstOrDefault();
+                Vote voteColumn = db.Voters.Where(x => x.AnswerId == answerId && x.UserId == voterId).FirstOrDefault();
+                if (voteColumn == null)
+                {
+                }
+                else
+                {
+                    if (voteColumn.Status == (int)EntityConstants.VOTE.Upvote)
+                    {
+                        db.Voters.Remove(voteColumn);
+                        answerDTO = AnswerMapper.ToDTO(answerFound);
+                        answerDTO.Upvoted = false;
+                        answerDTO.Downvoted = false;
+                        answerDTO.UpvoteCount--;
+                        db.SaveChanges();
+                        return answerDTO;
+                    }
+                    else if (voteColumn.Status == (int)EntityConstants.VOTE.Downvote)
+                    {
+
+                    }
+                }
+                db.SaveChanges();
+                answerDTO = AnswerMapper.ToDTO(answerFound);
+                answerDTO.Upvoted = false;
+                answerDTO.Downvoted = false;
+                return answerDTO;
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Un Down Vote
+        /// </summary>
+        /// <param name="voterId"></param>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO UnDownVote(Guid voterId, Guid answerId)
+        {
+            try
+            {
+                AnswerDTO answerDTO = new AnswerDTO();
+                Answer answerFound = db.Answers.Where(x => x.Id == answerId).FirstOrDefault();
+                Vote voteColumn = db.Voters.Where(x => x.AnswerId == answerId && x.UserId == voterId).FirstOrDefault();
+                if (voteColumn == null)
+                {
+                }
+                else
+                {
+                    if (voteColumn.Status == (int)EntityConstants.VOTE.Downvote)
+                    {
+                        db.Voters.Remove(voteColumn);
+                        answerDTO = AnswerMapper.ToDTO(answerFound);
+                        answerDTO.Upvoted = false;
+                        answerDTO.Downvoted = false;
+                        answerDTO.DownvoteCount--;
+                        db.SaveChanges();
+                        return answerDTO;
+                    }
+                    else if (voteColumn.Status == (int)EntityConstants.VOTE.Upvote)
+                    {
+
+                    }
+                }
+                db.SaveChanges();
+                answerDTO = AnswerMapper.ToDTO(answerFound);
+                answerDTO.Upvoted = false;
+                answerDTO.Downvoted = false;
                 return answerDTO;
             }
             catch

@@ -75,5 +75,54 @@ namespace Presentation.Controllers
 
         }
 
+        /// <summary>
+        /// Un upvote 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Authorize]
+        public HttpResponseMessage UnUpvote(Guid Id)
+        {
+            try
+            {
+                AnswerDTO answer = voteLogic.UnUpvote(CurrentUserId(), Id);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answer);
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Un Down Vote 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Authorize]
+        public HttpResponseMessage UnDownvote(Guid Id)
+        {
+            try
+            {
+                AnswerDTO answer = voteLogic.UnDownvote(CurrentUserId(), Id);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answer);
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+
+        }
+
     }
 }
