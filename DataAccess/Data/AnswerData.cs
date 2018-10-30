@@ -91,5 +91,35 @@ namespace DataAccess.Data
             }
 
         }
+    
+        /// <summary>
+        /// Delete User from database 
+        /// </summary>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO Delete(Guid answerId)
+        {
+            try
+            {
+                Answer answer = db.Answers.Where(x => x.Id == answerId).FirstOrDefault();
+                if (answer == null)
+                {
+                    throw new NoSuchAnswerFound();
+                }
+                AnswerDTO answerDTO = AnswerMapper.ToDTO(answer);
+                db.Answers.Remove(answer);
+                db.SaveChanges();
+                return answerDTO;
+            }
+            catch (NoSuchAnswerFound)
+            {
+                throw new NoSuchAnswerFound();
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
     }
 }

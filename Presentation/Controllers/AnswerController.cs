@@ -30,7 +30,6 @@ namespace Presentation.Controllers
             var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
                    .Select(c => c.Value).SingleOrDefault();
             return email;
-
         }
 
         /// <summary>
@@ -134,6 +133,38 @@ namespace Presentation.Controllers
                 return response;
             }
         }
+
+        /// <summary>
+        /// Delete answer 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Authorize]
+        public HttpResponseMessage Delete(Guid Id)
+        {
+            try
+            {
+                var answer = answerLogic.Delete(Id);
+                if (answer == null)
+                {
+                    throw new NoSuchAnswerFound();
+                }
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { answer });
+                return response;
+            }
+            catch (NoSuchAnswerFound e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
+
 
     }
 }

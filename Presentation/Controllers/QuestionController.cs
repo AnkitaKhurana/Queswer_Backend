@@ -149,7 +149,7 @@ namespace Presentation.Controllers
                 var question = questionLogic.Delete(Id);
                 if (question == null)
                 {
-                    throw new NoSuchUserExists();
+                    throw new NoSuchQuestionFound();
                 }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { question });
                 return response;

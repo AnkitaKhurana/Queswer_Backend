@@ -70,5 +70,27 @@ namespace BusinessLogic.Logic
                 return null;
             }
         }
+
+        /// <summary>
+        /// Delete answer 
+        /// </summary>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO Delete(Guid answerId)
+        {
+            try
+            {
+                return answerData.Delete(answerId);
+            }
+            catch (NoSuchAnswerFound)
+            {
+                throw new NoSuchAnswerFound();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }
