@@ -32,5 +32,25 @@ namespace BusinessLogic.Logic
             }
         }
 
+
+        /// <summary>
+        /// Downvote an answer
+        /// </summary>
+        /// <param name="voterId"></param>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
+        public AnswerDTO Downvote(Guid voterId, Guid answerId)
+        {
+            try
+            {
+                return voteData.Downvote(voterId, answerId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
     }
 }

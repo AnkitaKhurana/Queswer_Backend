@@ -26,6 +26,12 @@ namespace Presentation.Controllers
             return userLogic.Find(email).Id;
         }
 
+        /// <summary>
+        /// Upvote answer
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage Upvote(Guid Id)
@@ -33,6 +39,31 @@ namespace Presentation.Controllers
             try
             {
                 AnswerDTO answer = voteLogic.Upvote(CurrentUserId(), Id);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answer);
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Downvote answer 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Authorize]
+        public HttpResponseMessage Downvote(Guid Id)
+        {
+            try
+            {
+                AnswerDTO answer = voteLogic.Downvote(CurrentUserId(), Id);
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answer);
                 return response;
             }
