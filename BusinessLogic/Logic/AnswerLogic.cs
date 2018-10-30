@@ -25,7 +25,24 @@ namespace BusinessLogic.Logic
                 answer.UploadDate = DateTime.Now;
                 answer.EditDate = answer.UploadDate;
                 return answerData.Add(answer);
-            }          
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Find all answers to a question 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        public List<AnswerDTO> Find(Guid questionId)
+        {
+            try
+            {
+                return answerData.All(questionId);
+            }
             catch
             {
                 return null;

@@ -29,7 +29,30 @@ namespace DataAccess.Data
                 var answersaved = db.Answers.Include("Author").Where(x => x.Id == answerToSave.Id).FirstOrDefault();
                 return AnswerMapper.ToDTO(answersaved);
             }
-            catch (Exception e)
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get all answers of a question 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        public List<AnswerDTO> All(Guid questionId)
+        {
+            try{
+                List<AnswerDTO> answerDTOs = new List<AnswerDTO>();
+                var answers = db.Answers.Include("Author").Where(x => x.QuestionId == questionId);
+                foreach(var answer in answers)
+                {
+                    answerDTOs.Add(AnswerMapper.ToDTO(answer));
+                }
+
+                return answerDTOs;
+            }
+            catch
             {
                 return null;
             }

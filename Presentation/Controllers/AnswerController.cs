@@ -40,11 +40,11 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        public HttpResponseMessage Add(Answer answerToAdd,Guid id)
+        public HttpResponseMessage Add(Answer answerToAdd, Guid id)
         {
             try
             {
-                if (answerToAdd != null && ModelState.IsValid && id!=null)
+                if (answerToAdd != null && ModelState.IsValid && id != null)
                 {
 
                     AnswerDTO answerDTO = AnswerMapper.ToDTO(answerToAdd);
@@ -83,5 +83,22 @@ namespace Presentation.Controllers
                 return response;
             }
         }
+
+        [HttpGet]
+        public HttpResponseMessage All(Guid id)
+        {
+            try
+            {
+                List<AnswerDTO> answers = answerLogic.Find(id);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answers);
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
+
     }
 }
