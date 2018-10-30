@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Constants\AuthConstants.cs" />
     <Compile Include="Constants\RequestConstants.cs" />
+    <Compile Include="DTOs\AnswerDTO.cs" />
     <Compile Include="DTOs\QuestionDTO.cs" />
     <Compile Include="DTOs\TagDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />

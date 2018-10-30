@@ -72,9 +72,9 @@ namespace BusinessLogic.Logic
                 questionDTO.EditDate = questionDTO.UploadDate;
                 return questionData.Add(questionDTO);
             }
-            catch (NoSuchQuestionFound)
+            catch (NoSuchUserExists)
             {
-                throw new NoSuchQuestionFound();
+                throw new NoSuchUserExists();
             }
             catch
             {

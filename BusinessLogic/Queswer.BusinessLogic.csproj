@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\Hashing.cs" />
+    <Compile Include="Logic\AnswerLogic.cs" />
     <Compile Include="Logic\QuestionLogic.cs" />
     <Compile Include="Logic\TagLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />

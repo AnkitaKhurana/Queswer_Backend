@@ -213,6 +213,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="AuthHelpers\AuthorizationServerProvider.cs" />
     <Compile Include="AuthHelpers\RefreshTokenProvider.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TagController.cs" />
@@ -221,10 +222,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapper\AnswerMapper.cs" />
     <Compile Include="Mapper\QuestionMapper.cs" />
     <Compile Include="Mapper\RegisterUserMapper.cs" />
     <Compile Include="Mapper\TagMapper.cs" />
     <Compile Include="Mapper\UserMapper.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
