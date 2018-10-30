@@ -15,7 +15,7 @@ namespace Presentation.Mapper
             {
                 Id = userDTO.Id,
                 Email = userDTO.Email,
-                Password = userDTO.Password,
+                //Password = userDTO.Password,
                 Firstname = userDTO.Firstname,
                 Lastname = userDTO.Lastname,
                 FollowCount = userDTO.FollowCount,

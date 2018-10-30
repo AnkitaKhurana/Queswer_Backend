@@ -46,6 +46,7 @@
     <Compile Include="DTOs\QuestionDTO.cs" />
     <Compile Include="DTOs\TagDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
+    <Compile Include="Exceptions\NoSuchAnswerFound.cs" />
     <Compile Include="Exceptions\NoSuchQuestionFound.cs" />
     <Compile Include="Exceptions\NoSuchTagFound.cs" />
     <Compile Include="Exceptions\NoSuchUserExists.cs" />

@@ -1,5 +1,6 @@
 ﻿using DataAccess.Data;
 using Shared.DTOs;
+using Shared.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,27 @@ namespace BusinessLogic.Logic
             try
             {
                 return answerData.All(questionId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Edit an answer
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        public AnswerDTO Edit(AnswerDTO answer)
+        {
+            try
+            {              
+                return answerData.Edit(answer);
+            }
+            catch (NoSuchAnswerFound)
+            {
+                throw new NoSuchAnswerFound();
             }
             catch
             {

@@ -34,7 +34,8 @@ namespace DataAccess.Map
                 Firstname = user.Firstname,
                 Lastname = user.Lastname,
                 FollowCount = user.FollowCount,
-                Image = user.Image                
+                Image = user.Image,
+                Password = user.Password
             };
             return userDTO;
         }

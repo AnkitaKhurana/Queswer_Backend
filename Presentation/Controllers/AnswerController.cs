@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Presentation.Mapper;
 using Presentation.Models;
 using Shared.DTOs;
+using Shared.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,12 @@ namespace Presentation.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Get all answers of a question 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage All(Guid id)
         {
@@ -91,6 +98,34 @@ namespace Presentation.Controllers
             {
                 List<AnswerDTO> answers = answerLogic.Find(id);
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answers);
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
+
+        /// <summary>
+        /// Put request to edit answer 
+        /// </summary>
+        /// <param name="answerToEdit"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize]
+        public HttpResponseMessage Edit(Guid Id,Answer answerToEdit)
+        {
+            try
+            {
+                answerToEdit.Id = Id;
+                AnswerDTO answer = answerLogic.Edit(AnswerMapper.ToDTO(answerToEdit));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answer);
+                return response;
+            }
+            catch (NoSuchAnswerFound e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
                 return response;
             }
             catch (Exception e)

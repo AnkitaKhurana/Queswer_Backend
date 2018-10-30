@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using DataAccess.Map;
 using Shared.DTOs;
+using Shared.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,39 @@ namespace DataAccess.Data
             {
                 return null;
             }
+        }
+
+
+        /// <summary>
+        /// Edit answer 
+        /// </summary>
+        /// <param name="answerDTO"></param>
+        /// <returns></returns>
+        public  AnswerDTO Edit(AnswerDTO answerDTO)
+        {
+            try
+            {
+                AnswerDTO answerupdated = new AnswerDTO();
+                var answerFound = db.Answers.Where(x => x.Id == answerDTO.Id).FirstOrDefault();
+                if (answerFound == null)
+                {
+                    throw new NoSuchQuestionFound();
+                }
+                answerFound.Body = answerDTO.Body;
+                answerFound.EditDate = DateTime.Now;
+                answerupdated = AnswerMapper.ToDTO(answerFound);
+                db.SaveChanges();
+                return answerupdated;
+            }
+            catch (NoSuchAnswerFound)
+            {
+                throw new NoSuchQuestionFound();
+            }
+            catch
+            {
+                return null;
+            }
+
         }
     }
 }
