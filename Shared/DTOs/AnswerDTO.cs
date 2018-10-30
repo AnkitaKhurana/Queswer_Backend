@@ -19,6 +19,7 @@ namespace Shared.DTOs
         public QuestionDTO Question { get; set; }
         public Guid AuthorId { get; set; }
         public UserDTO Author { get; set; }
-
+        public bool Upvoted { get; set; }
+        public bool Downvoted { get; set; }
     }
 }

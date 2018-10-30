@@ -32,6 +32,15 @@ namespace Presentation.Controllers
             return email;
         }
 
+
+        private Guid CurrentUserId()
+        {
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+                   .Select(c => c.Value).SingleOrDefault();
+            return userLogic.Find(email).Id;
+        }
+
         /// <summary>
         /// Add new Answer to question : id 
         /// </summary>
@@ -95,7 +104,7 @@ namespace Presentation.Controllers
         {
             try
             {
-                List<AnswerDTO> answers = answerLogic.Find(id);
+                List<AnswerDTO> answers = answerLogic.Find(id, CurrentUserId());
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answers);
                 return response;
             }

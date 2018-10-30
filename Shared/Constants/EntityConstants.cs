@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Shared.Constants
+{
+    public static class EntityConstants
+    {
+        public enum VOTE
+        {
+            Upvote = 1,
+            Downvote = 0 
+        }
+    }
+}

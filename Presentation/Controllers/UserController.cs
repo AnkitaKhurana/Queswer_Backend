@@ -187,6 +187,25 @@ namespace Presentation.Controllers
 
         }
 
+        [HttpGet]
+        public HttpResponseMessage Logout()
+        {
+            try
+            {
+                Request.GetOwinContext().Authentication.SignOut(HttpContext.Current.GetOwinContext()
+                            .Authentication.GetAuthenticationTypes()
+                            .Select(o => o.AuthenticationType).ToArray());
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+                return response;
+            }
+            catch (Exception e)
+            {
+
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.ServiceUnavailable, e.Message);
+                return response;
+            }
+        }
+
         /// <summary>
         /// Returns the Email Id of Current Logged in user
         /// </summary>

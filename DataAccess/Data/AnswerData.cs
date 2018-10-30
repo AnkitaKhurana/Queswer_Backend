@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using DataAccess.Map;
+using Shared.Constants;
 using Shared.DTOs;
 using Shared.Exceptions;
 using System;
@@ -14,7 +15,39 @@ namespace DataAccess.Data
     {
         private QueswerContext db = new QueswerContext();
 
+        private bool CheckUpvote(Guid currentUser,Guid currentAnswer)
+        {
+            try
+            {
+                var found = db.Voters.Where(x => x.UserId == currentUser && x.AnswerId == currentAnswer && x.Status == (int)EntityConstants.VOTE.Upvote);
+                if (found == null)
+                    return true;
+                else
+                    return false;
 
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private bool CheckDownvote(Guid currentUser, Guid currentAnswer)
+        {
+            try
+            {
+                var found = db.Voters.Where(x => x.UserId == currentUser && x.AnswerId == currentAnswer && x.Status == (int)EntityConstants.VOTE.Downvote);
+                if (found == null)
+                    return true;
+                else
+                    return false;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
         /// <summary>
         /// Add answer to db
         /// </summary>
@@ -28,7 +61,10 @@ namespace DataAccess.Data
                 var answerToSave = db.Answers.Add(AnswerMapper.ToDB(answerDTO));
                 db.SaveChanges();
                 var answersaved = db.Answers.Include("Author").Where(x => x.Id == answerToSave.Id).FirstOrDefault();
-                return AnswerMapper.ToDTO(answersaved);
+                AnswerDTO answerToReturn = AnswerMapper.ToDTO(answersaved);
+                answerToReturn.Upvoted = false;
+                answerToReturn.Downvoted = false;
+                return answerToReturn;
             }
             catch
             {
@@ -41,14 +77,17 @@ namespace DataAccess.Data
         /// </summary>
         /// <param name="questionId"></param>
         /// <returns></returns>
-        public List<AnswerDTO> All(Guid questionId)
+        public List<AnswerDTO> All(Guid questionId, Guid currentUser)
         {
             try{
                 List<AnswerDTO> answerDTOs = new List<AnswerDTO>();
-                var answers = db.Answers.Include("Author").Where(x => x.QuestionId == questionId);
+                var answers = db.Answers.Include("Author").Where(x => x.QuestionId == questionId).ToList();
                 foreach(var answer in answers)
                 {
-                    answerDTOs.Add(AnswerMapper.ToDTO(answer));
+                    AnswerDTO temp = AnswerMapper.ToDTO(answer);
+                    temp.Upvoted = CheckUpvote(currentUser, answer.Id);
+                    temp.Downvoted = CheckDownvote(currentUser, answer.Id);
+                    answerDTOs.Add(temp);
                 }
 
                 return answerDTOs;
@@ -65,7 +104,7 @@ namespace DataAccess.Data
         /// </summary>
         /// <param name="answerDTO"></param>
         /// <returns></returns>
-        public  AnswerDTO Edit(AnswerDTO answerDTO)
+        public  AnswerDTO Edit(AnswerDTO answerDTO, Guid currentUser)
         {
             try
             {
@@ -78,6 +117,8 @@ namespace DataAccess.Data
                 answerFound.Body = answerDTO.Body;
                 answerFound.EditDate = DateTime.Now;
                 answerupdated = AnswerMapper.ToDTO(answerFound);
+                answerupdated.Upvoted = CheckUpvote(currentUser, answerFound.Id);
+                answerupdated.Downvoted = CheckDownvote(currentUser, answerFound.Id);
                 db.SaveChanges();
                 return answerupdated;
             }

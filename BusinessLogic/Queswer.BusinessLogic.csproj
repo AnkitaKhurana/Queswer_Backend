@@ -48,6 +48,7 @@
     <Compile Include="Logic\QuestionLogic.cs" />
     <Compile Include="Logic\TagLogic.cs" />
     <Compile Include="Logic\UserLogic.cs" />
+    <Compile Include="Logic\VoteLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

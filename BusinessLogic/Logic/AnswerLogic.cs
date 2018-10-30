@@ -38,11 +38,11 @@ namespace BusinessLogic.Logic
         /// </summary>
         /// <param name="questionId"></param>
         /// <returns></returns>
-        public List<AnswerDTO> Find(Guid questionId)
+        public List<AnswerDTO> Find(Guid questionId, Guid currentUser)
         {
             try
             {
-                return answerData.All(questionId);
+                return answerData.All(questionId, currentUser);
             }
             catch
             {
@@ -59,7 +59,7 @@ namespace BusinessLogic.Logic
         {
             try
             {              
-                return answerData.Edit(answer);
+                return answerData.Edit(answer, answer.AuthorId);
             }
             catch (NoSuchAnswerFound)
             {
