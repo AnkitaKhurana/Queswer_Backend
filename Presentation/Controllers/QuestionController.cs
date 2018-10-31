@@ -23,6 +23,15 @@ namespace Presentation.Controllers
         private QuestionLogic questionLogic = new QuestionLogic();
         private UserLogic userLogic = new UserLogic();
 
+        private Guid CurrentUserId()
+        {
+            var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
+            var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
+                   .Select(c => c.Value).SingleOrDefault();
+            return userLogic.Find(email).Id;
+        }
+
+
         /// <summary>
         /// Returns the Email Id of Current Logged in user
         /// </summary>
@@ -91,7 +100,6 @@ namespace Presentation.Controllers
         {
             try
             {
-
                 var question = questionLogic.Find(Id);
                 if (question == null)
                 {
@@ -173,6 +181,11 @@ namespace Presentation.Controllers
         {
             try
             {
+                
+                if(questionLogic.Find(Id).Id != CurrentUserId())
+                {
+                    throw new Unauthorised();
+                }
                 var question = questionLogic.Delete(Id);
                 if (question == null)
                 {
@@ -184,6 +197,11 @@ namespace Presentation.Controllers
             catch (NoSuchQuestionFound e)
             {
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                return response;
+            }
+            catch (Unauthorised e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Forbidden, new { error = e.Message });
                 return response;
             }
             catch (Exception e)
@@ -205,6 +223,10 @@ namespace Presentation.Controllers
         {
             try
             {
+                if (questionLogic.Find(Id).Id != CurrentUserId())
+                {
+                    throw new Unauthorised();
+                }
                 question.Id = Id;
                 QuestionDTO questionToEdit  = QuestionMapper.ToDTO(question);
                 questionToEdit.Tags = SetTags(question.Tags);
@@ -214,6 +236,11 @@ namespace Presentation.Controllers
                     throw new NoSuchQuestionFound();
                 }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questionDTO });
+                return response;
+            }
+            catch (Unauthorised e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Forbidden, new { error = e.Message });
                 return response;
             }
             catch (NoSuchQuestionFound e)

@@ -125,10 +125,18 @@ namespace Presentation.Controllers
         public HttpResponseMessage Edit(Guid Id,Answer answerToEdit)
         {
             try
-            {
+            {   if(answerLogic.FindAuthorId(answerToEdit.Id)!= CurrentUserId())
+                {
+                    throw new Unauthorised();
+                }
                 answerToEdit.Id = Id;
                 AnswerDTO answer = answerLogic.Edit(AnswerMapper.ToDTO(answerToEdit));
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answer);
+                return response;
+            }
+            catch(Unauthorised e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Forbidden, new { error = e.Message });
                 return response;
             }
             catch (NoSuchAnswerFound e)
@@ -159,7 +167,16 @@ namespace Presentation.Controllers
                 {
                     throw new NoSuchAnswerFound();
                 }
+                if (answerLogic.FindAuthorId(answer.Id) != CurrentUserId())
+                    {
+                        throw new Unauthorised();
+                }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { answer });
+                return response;
+            }
+            catch (Unauthorised e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Forbidden, new { error = e.Message });
                 return response;
             }
             catch (NoSuchAnswerFound e)

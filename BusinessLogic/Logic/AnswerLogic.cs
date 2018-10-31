@@ -13,6 +13,19 @@ namespace BusinessLogic.Logic
     {
         private AnswerData answerData = new AnswerData();
 
+
+        public Guid FindAuthorId(Guid answerId)
+        {
+            try
+            {
+                return answerData.FindAuthorId(answerId);
+            }
+            catch
+            {
+                return Guid.Empty;
+            }
+        }
+
         /// <summary>
         /// Add new Answer 
         /// </summary>
@@ -58,7 +71,7 @@ namespace BusinessLogic.Logic
         public AnswerDTO Edit(AnswerDTO answer)
         {
             try
-            {              
+            {
                 return answerData.Edit(answer, answer.AuthorId);
             }
             catch (NoSuchAnswerFound)

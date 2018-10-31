@@ -13,6 +13,18 @@ namespace BusinessLogic.Logic
     {
         private QuestionData questionData = new QuestionData();
 
+        public Guid FindAuthorId(Guid questionId)
+        {
+            try
+            {
+                return questionData.FindAuthorId(questionId);
+            }
+            catch
+            {
+                return Guid.Empty;
+            }
+        }
+
 
         /// <summary>
         /// Find Question

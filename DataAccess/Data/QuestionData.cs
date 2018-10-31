@@ -15,6 +15,11 @@ namespace DataAccess.Data
     {
         private QueswerContext db = new QueswerContext();
 
+        public Guid FindAuthorId(Guid questionId)
+        {
+            return db.Questions.Where(x => x.Id == questionId).FirstOrDefault().Id;
+        }
+
         /// <summary>
         /// Return all questions (page||count)
         /// </summary>

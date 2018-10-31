@@ -52,6 +52,7 @@ namespace Presentation.AuthHelpers
             bool result = false;
             try
             {
+
                 // = objAuth.ValidateToken(authorizedToken, userAgent);
             }
             catch (Exception)

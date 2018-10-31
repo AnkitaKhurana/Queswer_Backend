@@ -52,6 +52,7 @@
     <Compile Include="Exceptions\NoSuchQuestionFound.cs" />
     <Compile Include="Exceptions\NoSuchTagFound.cs" />
     <Compile Include="Exceptions\NoSuchUserExists.cs" />
+    <Compile Include="Exceptions\Unauthorised.cs" />
     <Compile Include="Exceptions\UserAlreadyExists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

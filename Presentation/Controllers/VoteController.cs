@@ -33,7 +33,6 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        [Authorize]
         public HttpResponseMessage Upvote(Guid Id)
         {
             try
@@ -56,7 +55,6 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage Downvote(Guid Id)
@@ -80,7 +78,6 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage UnUpvote(Guid Id)
@@ -105,7 +102,6 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage UnDownvote(Guid Id)

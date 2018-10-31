@@ -48,6 +48,12 @@ namespace DataAccess.Data
                 return false;
             }
         }
+
+        public Guid FindAuthorId(Guid answerId)
+        {
+            return db.Answers.Where(x => x.Id == answerId).FirstOrDefault().Id;
+        }
+
         /// <summary>
         /// Add answer to db
         /// </summary>

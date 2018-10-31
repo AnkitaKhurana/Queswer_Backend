@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Presentation.AuthHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ namespace Presentation.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
+        [IsAuthor]
         [Authorize]
         public IEnumerable<string> Get()
         {
