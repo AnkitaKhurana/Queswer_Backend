@@ -21,21 +21,22 @@ namespace DataAccess.Data
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<QuestionDTO> All(int? page, int? count)
+        public List<QuestionDTO> All(int? page, int? count, string searchString)
         {
             try
             {
                 List<QuestionDTO> questions = new List<QuestionDTO>();
-               var takePage = page ?? 1;
+                var takePage = page ?? 1;
                 var takeCount = count ?? PageConstants.DefaultPageRecordCount;
                 var questionsDB = db.Questions
-                               .Include("Author")   
-                               .OrderBy(x=>x.UploadDate)
-                               .Skip((takePage - 1) * takeCount)
-                               .Take(takeCount)
-                               .ToList();
+                                 .Include("Author")
+                                 .Where(s => (searchString == null ? true : s.Title.Contains(searchString)))
+                                 .OrderBy(x => x.UploadDate)
+                                 .Skip((takePage - 1) * takeCount)
+                                 .Take(takeCount)
+                                 .ToList();
 
-                foreach(var ques in questionsDB)
+                foreach (var ques in questionsDB)
                 {
                     questions.Add(QuestionMapper.ToDTO(ques));
                 }
@@ -43,7 +44,7 @@ namespace DataAccess.Data
                 return questions;
 
             }
-            catch 
+            catch
             {
                 return null;
             }
@@ -93,7 +94,7 @@ namespace DataAccess.Data
                 {
                     tag.Id = Guid.NewGuid();
                     var currentTag = db.Tags.Where(x => x.Body == tag.Body).FirstOrDefault();
-                    if(currentTag == null)
+                    if (currentTag == null)
                     {
                         var tagsaved = db.Tags.Add(TagMapper.ToDB(tag));
                         question.Tags.Add(tagsaved);
@@ -103,13 +104,14 @@ namespace DataAccess.Data
                         question.Tags.Add(currentTag);
                     }
                 }
-                
+
                 var questionAdded = db.Questions.Add(question);
                 db.SaveChanges();
                 var questionFound = db.Questions
                  .Include("Author")
                  .Where(s => s.Id == questionAdded.Id)
                  .FirstOrDefault();
+
                 return QuestionMapper.ToDTO(questionFound);
             }
             catch
@@ -161,13 +163,13 @@ namespace DataAccess.Data
             {
                 QuestionDTO questionUpdated = new QuestionDTO();
                 var questionFound = db.Questions.Where(x => x.Id == questionDTO.Id).FirstOrDefault();
-                if(questionFound == null)
+                if (questionFound == null)
                 {
                     throw new NoSuchQuestionFound();
                 }
                 questionFound.Description = questionDTO.Description;
                 questionFound.Title = questionDTO.Title;
-                List<Tag> tags  = new List<Tag>();
+                List<Tag> tags = new List<Tag>();
                 foreach (var tag in questionDTO.Tags)
                 {
                     tag.Id = Guid.NewGuid();
@@ -185,7 +187,7 @@ namespace DataAccess.Data
                 questionFound.Tags = tags;
                 questionFound.Image = questionDTO.Image;
                 questionFound.EditDate = DateTime.Now;
-                questionUpdated = QuestionMapper.ToDTO(questionFound);               
+                questionUpdated = QuestionMapper.ToDTO(questionFound);
                 db.SaveChanges();
                 return questionUpdated;
             }

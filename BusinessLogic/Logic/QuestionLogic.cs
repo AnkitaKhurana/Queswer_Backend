@@ -109,12 +109,12 @@ namespace BusinessLogic.Logic
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public List<QuestionDTO> All(int? page, int? count)
+        public List<QuestionDTO> All(int? page, int? count, string searchString)
         {
             try
             {
             
-                return questionData.All(page, count);
+                return questionData.All(page, count, searchString);
             }
             catch
             {

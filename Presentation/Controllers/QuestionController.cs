@@ -63,13 +63,13 @@ namespace Presentation.Controllers
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        [Route("all/{page=1}/{count=20}")]
+        [Route("all/{searchString=}/{page=1}/{count=20}")]
         [HttpGet]
-        public HttpResponseMessage All(int page, int count)
+        public HttpResponseMessage All(int page, int count, string searchString)
         {
             try
             {
-                var questions = questionLogic.All(page, count);
+                var questions = questionLogic.All(page, count, searchString);
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questions });
                 return response;
             }
