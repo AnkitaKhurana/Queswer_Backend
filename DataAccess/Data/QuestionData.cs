@@ -1,5 +1,6 @@
 ﻿using Data.Models;
 using DataAccess.Map;
+using Shared.Constants;
 using Shared.DTOs;
 using Shared.Exceptions;
 using System;
@@ -13,6 +14,41 @@ namespace DataAccess.Data
     public class QuestionData
     {
         private QueswerContext db = new QueswerContext();
+
+        /// <summary>
+        /// Return all questions (page||count)
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<QuestionDTO> All(int? page, int? count)
+        {
+            try
+            {
+                List<QuestionDTO> questions = new List<QuestionDTO>();
+               var takePage = page ?? 1;
+                var takeCount = count ?? PageConstants.DefaultPageRecordCount;
+                var questionsDB = db.Questions
+                               .Include("Author")   
+                               .OrderBy(x=>x.UploadDate)
+                               .Skip((takePage - 1) * takeCount)
+                               .Take(takeCount)
+                               .ToList();
+
+                foreach(var ques in questionsDB)
+                {
+                    questions.Add(QuestionMapper.ToDTO(ques));
+                }
+
+                return questions;
+
+            }
+            catch 
+            {
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Find Question by Id 

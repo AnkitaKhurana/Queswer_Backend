@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Presentation.Mapper;
 using Presentation.Models;
+using Shared.Constants;
 using Shared.DTOs;
 using Shared.Exceptions;
 using System;
@@ -12,9 +13,11 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading;
 using System.Web.Http;
+using System.Web.Http.Routing;
 
 namespace Presentation.Controllers
 {
+    [RoutePrefix("api/question")]
     public class QuestionController : ApiController
     {
         private QuestionLogic questionLogic = new QuestionLogic();
@@ -55,6 +58,30 @@ namespace Presentation.Controllers
         }
 
         /// <summary>
+        /// All Questions return (with optional page || count )
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Route("all/{page=1}/{count=20}")]
+        [HttpGet]
+        public HttpResponseMessage All(int page, int count)
+        {
+            try
+            {
+                var questions = questionLogic.All(page, count);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questions });
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+                return response;
+            }
+        }
+
+
+        /// <summary>
         /// Find Question Via Id
         /// </summary>
         /// <param name="Id"></param>
@@ -68,7 +95,7 @@ namespace Presentation.Controllers
                 var question = questionLogic.Find(Id);
                 if (question == null)
                 {
-                    throw new NoSuchUserExists();
+                    throw new NoSuchQuestionFound();
                 }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { question });
                 return response;
@@ -184,7 +211,7 @@ namespace Presentation.Controllers
                 QuestionDTO questionDTO = questionLogic.Edit(questionToEdit);
                 if (questionDTO == null)
                 {
-                    throw new NoSuchUserExists();
+                    throw new NoSuchQuestionFound();
                 }
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questionDTO });
                 return response;

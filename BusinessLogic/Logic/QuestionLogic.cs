@@ -102,5 +102,24 @@ namespace BusinessLogic.Logic
                 return null;
             }
         }
+
+        /// <summary>
+        /// All questions (Page||count )
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<QuestionDTO> All(int? page, int? count)
+        {
+            try
+            {
+            
+                return questionData.All(page, count);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

@@ -16,8 +16,8 @@ namespace Presentation
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional, action = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{action}/{id}/{id2}",
+                defaults: new { id = RouteParameter.Optional,id2 = RouteParameter.Optional, action = RouteParameter.Optional }
             );
         }
     }
