@@ -18,6 +18,7 @@ using Shared.Constants;
 
 namespace Presentation.Controllers
 {
+    [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
         private UserLogic userLogic = new UserLogic();
@@ -29,6 +30,7 @@ namespace Presentation.Controllers
         /// <param name="userToRegister"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("register")]
         public HttpResponseMessage Register(UserRegister userToRegister)
         {
             try
@@ -99,6 +101,7 @@ namespace Presentation.Controllers
         /// <param name="userToLogin"></param>
         /// <returns></returns>
         [HttpPost]
+        [Route("login")]
         public HttpResponseMessage Login(User userToLogin)
         {
             try
@@ -132,6 +135,7 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
+        [Route("profile")]
         public HttpResponseMessage Profile()
         {
             try
@@ -163,6 +167,7 @@ namespace Presentation.Controllers
         /// <param name="userToUpdate"></param>
         /// <returns></returns>
         [Authorize]
+        [Route("update")]
         [HttpPut]
         public HttpResponseMessage Update([System.Web.Mvc.Bind(Include = "Firstname,Lastname,Password")] User userToUpdate)
         {

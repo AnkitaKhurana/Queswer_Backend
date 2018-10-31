@@ -96,6 +96,7 @@ namespace Presentation.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
+        [Route("find/{Id}")]
         public HttpResponseMessage Find(Guid Id)
         {
             try
@@ -127,6 +128,7 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
+        [Route("add")]
         public HttpResponseMessage Add(Question questionToAdd)
         {
             try
@@ -177,6 +179,7 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Authorize]
+        [Route("delete/{Id}")]
         public HttpResponseMessage Delete(Guid Id)
         {
             try
@@ -217,6 +220,7 @@ namespace Presentation.Controllers
         /// <param name="question"></param>
         /// <param name="Id"></param>
         /// <returns></returns>
+        [Route("Edit/{Id}")]
         [HttpPut]
         [Authorize]
         public HttpResponseMessage Edit(Question question,Guid Id )

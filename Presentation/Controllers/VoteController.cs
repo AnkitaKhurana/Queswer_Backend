@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace Presentation.Controllers
 {
+    [RoutePrefix("api/vote")]
     public class VoteController : ApiController
     {
 
@@ -31,6 +32,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
+        [Route("upvote")]
         [Authorize]
         [HttpGet]
         public HttpResponseMessage Upvote(Guid Id)
@@ -55,6 +57,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
+        [Route("downvote")]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage Downvote(Guid Id)
@@ -78,6 +81,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
+        [Route("unupvote")]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage UnUpvote(Guid Id)
@@ -102,6 +106,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
+        [Route("undownvote")]
         [HttpGet]
         [Authorize]
         public HttpResponseMessage UnDownvote(Guid Id)

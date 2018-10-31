@@ -15,6 +15,7 @@ using System.Web.Http;
 
 namespace Presentation.Controllers
 {
+    [RoutePrefix("api/answer")]
     public class AnswerController : ApiController
     {
         private AnswerLogic answerLogic = new AnswerLogic();
@@ -49,6 +50,7 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
+        [Route("add/{id}")]
         public HttpResponseMessage Add(Answer answerToAdd, Guid id)
         {
             try
@@ -99,6 +101,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Route("all/{id}")]
         [HttpGet]
         public HttpResponseMessage All(Guid id)
         {
@@ -122,6 +125,7 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [HttpPut]
         [Authorize]
+        [Route("edit/{id}")]
         public HttpResponseMessage Edit(Guid Id,Answer answerToEdit)
         {
             try
@@ -158,6 +162,7 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [HttpDelete]
         [Authorize]
+        [Route("delete/{id}")]
         public HttpResponseMessage Delete(Guid Id)
         {
             try

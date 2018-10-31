@@ -218,11 +218,9 @@
     <Compile Include="AuthHelpers\IsAuthor.cs" />
     <Compile Include="AuthHelpers\RefreshTokenProvider.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\TagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VoteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

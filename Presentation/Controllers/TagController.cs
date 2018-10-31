@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace Presentation.Controllers
 {
+    [RoutePrefix("api/tag")]
     public class TagController : ApiController
     {
         private TagLogic tagLogic = new TagLogic();
@@ -18,6 +19,7 @@ namespace Presentation.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Route("all")]
         public HttpResponseMessage All()
         {
             try
@@ -42,7 +44,8 @@ namespace Presentation.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public HttpResponseMessage Find(Guid Id )
+        [Route("find/{id}")]
+        public HttpResponseMessage Find(Guid Id)
         {
             try
             {
