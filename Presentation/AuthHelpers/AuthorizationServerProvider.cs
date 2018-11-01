@@ -1,4 +1,5 @@
-﻿using BusinessLogic.Logic;
+﻿
+using BusinessLogic.Logic;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Presentation.Models;
@@ -54,11 +55,7 @@ namespace Presentation.AuthHelpers
         /// <returns></returns>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-
             string email = context.OwinContext.Get<string>("email");
-
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             UserLogic userLogic = new UserLogic();
 
