@@ -53,7 +53,7 @@ namespace DataAccess.Data
         {
             try
             {
-                var dbTags = db.Tags.Where(x=>x.Id == TagId).FirstOrDefault();
+                var dbTags = db.Tags.Include("Questions").Where(x=>x.Id == TagId).FirstOrDefault();
                
                 TagDTO tag = TagMapper.ToDTO(dbTags);
                 foreach (var ques in dbTags.Questions)

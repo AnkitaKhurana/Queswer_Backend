@@ -33,6 +33,23 @@ namespace BusinessLogic.Logic
             }
         }
 
+        /// <summary>
+        /// Find user by id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public UserDTO Find(Guid Id)
+        {
+            try
+            {
+                return userData.FindUser(Id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Find user by email and password 

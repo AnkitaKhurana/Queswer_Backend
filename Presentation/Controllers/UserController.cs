@@ -213,6 +213,35 @@ namespace Presentation.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Return current logged in user profile
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Route("{Id}")]
+        public HttpResponseMessage Find(Guid Id)
+        {
+            try
+            {
+                User user = UserMapper.ToViewModel(userLogic.Find(Id));
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { user });
+                return response;
+            }
+            catch (NoSuchUserExists e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Unauthorized, e.Message);
+                return response;
+            }
+            catch (Exception e)
+            {
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.ServiceUnavailable, e.Message);
+                return response;
+            }
+
+        }
+
         /// <summary>
         /// Returns the Email Id of Current Logged in user
         /// </summary>

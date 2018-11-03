@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using Shared.DTOs;
 using Shared.Exceptions;
+using System;
 using System.Linq;
 
 namespace DataAccess.Data
@@ -42,6 +43,26 @@ namespace DataAccess.Data
             try
             {
                 User user = db.Users.Where(x => x.Email == email).FirstOrDefault();
+                UserDTO userDTO = Map.UserMapper.ToDTO(user);
+                return userDTO;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Find user by Guid
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public UserDTO FindUser(Guid Id)
+        {
+            try
+            {
+                User user = db.Users.Where(x => x.Id == Id).FirstOrDefault();
                 UserDTO userDTO = Map.UserMapper.ToDTO(user);
                 return userDTO;
             }
