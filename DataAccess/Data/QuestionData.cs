@@ -58,7 +58,7 @@ namespace DataAccess.Data
                     questionDTO.TotalAnswers = answerData.Count(ques.Id);
                     questions.Add(questionDTO);
                 }
-                
+
                 return questions;
 
             }

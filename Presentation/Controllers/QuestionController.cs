@@ -75,12 +75,13 @@ namespace Presentation.Controllers
         [Route("all/{searchString=}/{page=1}/{count=10}")]
         [HttpGet]
         public HttpResponseMessage All(int page, int count, string searchString)
+
         {
             try
             {
                 var questions = questionLogic.All(page, count, searchString);
                 int totalQuestions = questions.Count();
-                if (searchString==string.Empty||searchString==null)
+                if (searchString == string.Empty || searchString == null)
                     totalQuestions = questionLogic.Count();
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questions, totalQuestions });
                 return response;
@@ -187,8 +188,8 @@ namespace Presentation.Controllers
         {
             try
             {
-                
-                if(questionLogic.Find(Id).Author.Id != CurrentUserId())
+
+                if (questionLogic.Find(Id).Author.Id != CurrentUserId())
                 {
                     throw new Unauthorised();
                 }
@@ -226,7 +227,7 @@ namespace Presentation.Controllers
         [Route("Edit/{Id}")]
         [HttpPut]
         [Authorize]
-        public HttpResponseMessage Edit([FromBody]Question questionToEdit,[FromUri]Guid Id )
+        public HttpResponseMessage Edit([FromBody]Question questionToEdit, [FromUri]Guid Id)
         {
             try
             {
@@ -235,7 +236,7 @@ namespace Presentation.Controllers
                     throw new Unauthorised();
                 }
                 questionToEdit.Id = Id;
-                QuestionDTO questionEdit  = QuestionMapper.ToDTO(questionToEdit);
+                QuestionDTO questionEdit = QuestionMapper.ToDTO(questionToEdit);
                 questionEdit.Tags = SetTags(questionToEdit.Tags);
                 QuestionDTO question = questionLogic.Edit(questionEdit);
                 if (question == null)
