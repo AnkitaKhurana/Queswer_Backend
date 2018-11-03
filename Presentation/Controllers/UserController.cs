@@ -15,6 +15,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Http;
 using Shared.Constants;
+using System.IO;
 
 namespace Presentation.Controllers
 {
@@ -56,7 +57,7 @@ namespace Presentation.Controllers
 
                     var jsonerrors = JsonConvert.SerializeObject(new
                     {
-                        errors = validationErrors
+                        error = validationErrors
                     });
                     return Request.CreateResponse(HttpStatusCode.Forbidden, JsonConvert.DeserializeObject(jsonerrors));
                 }
@@ -64,7 +65,7 @@ namespace Presentation.Controllers
             }
             catch (UserAlreadyExists e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, new { error = e.Message });
                 return response;
             }
             catch (Exception e)
@@ -102,23 +103,24 @@ namespace Presentation.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("login")]
-        public HttpResponseMessage Login(User userToLogin)
+        public HttpResponseMessage Login([FromBody]User userToLogin)
         {
             try
-            {
-                UserDTO userDTO = UserMapper.ToDTO(userToLogin);
-                var user = userLogic.Find(userDTO.Email, userDTO.Password);
-                if (user == null)
+            {             
+                UserDTO user = UserMapper.ToDTO(userToLogin);
+                var userDB = userLogic.Find(user.Email, user.Password);
+                if (userDB == null)
                 {
                     throw new NoSuchUserExists();
                 }
                 string token = this.Token(userToLogin);
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, new { user, token });
+                user.Token = token;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, new { user });
                 return response;
             }
             catch (NoSuchUserExists e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, e.Message);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
                 return response;
             }
             catch (Exception e)
@@ -144,7 +146,7 @@ namespace Presentation.Controllers
                 var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
                        .Select(c => c.Value).SingleOrDefault();
 
-                User user = UserMapper.ToViewModel(userLogic.Find(email));
+                User user = UserMapper.ToViewModel(userLogic.Find(email));               
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { user });
                 return response;
             }

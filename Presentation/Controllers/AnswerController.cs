@@ -39,6 +39,8 @@ namespace Presentation.Controllers
             var identity = (ClaimsPrincipal)Thread.CurrentPrincipal;
             var email = identity.Claims.Where(c => c.Type == ClaimTypes.Email)
                    .Select(c => c.Value).SingleOrDefault();
+            if (email == null)
+                return Guid.Empty;
             return userLogic.Find(email).Id;
         }
 
@@ -108,7 +110,8 @@ namespace Presentation.Controllers
             try
             {
                 List<AnswerDTO> answers = answerLogic.Find(id, CurrentUserId());
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, answers);
+                answers = answers.OrderByDescending(x => x.UpvoteCount).ThenByDescending(x=>x.UploadDate).ToList();
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, answers);
                 return response;
             }
             catch (Exception e)
@@ -129,7 +132,7 @@ namespace Presentation.Controllers
         public HttpResponseMessage Edit(Guid Id,Answer answerToEdit)
         {
             try
-            {   if(answerLogic.FindAuthorId(answerToEdit.Id)!= CurrentUserId())
+            {   if(answerLogic.FindAuthorId(Id)!= CurrentUserId())
                 {
                     throw new Unauthorised();
                 }
@@ -145,7 +148,7 @@ namespace Presentation.Controllers
             }
             catch (NoSuchAnswerFound e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, new { error = e.Message });
                 return response;
             }
             catch (Exception e)
@@ -167,15 +170,16 @@ namespace Presentation.Controllers
         {
             try
             {
+               
+                if (answerLogic.FindAuthorId(Id) != CurrentUserId())
+                {
+                    throw new Unauthorised();
+                }
                 var answer = answerLogic.Delete(Id);
                 if (answer == null)
                 {
                     throw new NoSuchAnswerFound();
-                }
-                if (answerLogic.FindAuthorId(answer.Id) != CurrentUserId())
-                    {
-                        throw new Unauthorised();
-                }
+                }                
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { answer });
                 return response;
             }
@@ -186,7 +190,7 @@ namespace Presentation.Controllers
             }
             catch (NoSuchAnswerFound e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, new { error = e.Message });
                 return response;
             }
             catch (Exception e)

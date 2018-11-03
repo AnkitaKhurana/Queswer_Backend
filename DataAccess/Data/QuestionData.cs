@@ -14,7 +14,18 @@ namespace DataAccess.Data
     public class QuestionData
     {
         private QueswerContext db = new QueswerContext();
+        private AnswerData answerData = new AnswerData();
 
+        public int Count()
+        {
+            return db.Questions.Count();
+        }
+
+        /// <summary>
+        /// Find User ID 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
         public Guid FindAuthorId(Guid questionId)
         {
             return db.Questions.Where(x => x.Id == questionId).FirstOrDefault().Id;
@@ -36,16 +47,18 @@ namespace DataAccess.Data
                 var questionsDB = db.Questions
                                  .Include("Author")
                                  .Where(s => (searchString == null ? true : s.Title.Contains(searchString)))
-                                 .OrderBy(x => x.UploadDate)
+                                 .OrderByDescending(x => x.UploadDate)
                                  .Skip((takePage - 1) * takeCount)
                                  .Take(takeCount)
                                  .ToList();
 
                 foreach (var ques in questionsDB)
                 {
-                    questions.Add(QuestionMapper.ToDTO(ques));
+                    QuestionDTO questionDTO = QuestionMapper.ToDTO(ques);
+                    questionDTO.TotalAnswers = answerData.Count(ques.Id);
+                    questions.Add(questionDTO);
                 }
-
+                
                 return questions;
 
             }
@@ -65,7 +78,7 @@ namespace DataAccess.Data
         {
             try
             {
-                Question question = db.Questions.Where(x => x.Id == QuestionId).FirstOrDefault();
+                Question question = db.Questions.Include("Author").Where(x => x.Id == QuestionId).FirstOrDefault();
                 if (question == null)
                 {
                     throw new NoSuchQuestionFound();

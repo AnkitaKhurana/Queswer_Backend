@@ -15,12 +15,17 @@ namespace DataAccess.Data
     {
         private QueswerContext db = new QueswerContext();
 
+        public int Count(Guid questionId)
+        {
+            return db.Answers.Count(x => x.QuestionId == questionId);
+        }
+
         private bool CheckUpvote(Guid currentUser,Guid currentAnswer)
         {
             try
             {
-                var found = db.Voters.Where(x => x.UserId == currentUser && x.AnswerId == currentAnswer && x.Status == (int)EntityConstants.VOTE.Upvote);
-                if (found == null)
+                var found = db.Voters.FirstOrDefault(x => x.UserId == currentUser && x.AnswerId == currentAnswer && x.Status == (int)EntityConstants.VOTE.Upvote);
+                if (found != null)
                     return true;
                 else
                     return false;
@@ -36,8 +41,8 @@ namespace DataAccess.Data
         {
             try
             {
-                var found = db.Voters.Where(x => x.UserId == currentUser && x.AnswerId == currentAnswer && x.Status == (int)EntityConstants.VOTE.Downvote);
-                if (found == null)
+                var found = db.Voters.FirstOrDefault(x => x.UserId == currentUser && x.AnswerId == currentAnswer && x.Status == (int)EntityConstants.VOTE.Downvote);
+                if (found != null)
                     return true;
                 else
                     return false;
@@ -51,7 +56,7 @@ namespace DataAccess.Data
 
         public Guid FindAuthorId(Guid answerId)
         {
-            return db.Answers.Where(x => x.Id == answerId).FirstOrDefault().Id;
+            return db.Answers.Where(x => x.Id == answerId).FirstOrDefault().AuthorId;
         }
 
         /// <summary>
@@ -91,8 +96,11 @@ namespace DataAccess.Data
                 foreach(var answer in answers)
                 {
                     AnswerDTO temp = AnswerMapper.ToDTO(answer);
-                    temp.Upvoted = CheckUpvote(currentUser, answer.Id);
-                    temp.Downvoted = CheckDownvote(currentUser, answer.Id);
+                    if(currentUser!=Guid.Empty && currentUser != null)
+                    {
+                        temp.Upvoted = CheckUpvote(currentUser, answer.Id);
+                        temp.Downvoted = CheckDownvote(currentUser, answer.Id);
+                    }                   
                     answerDTOs.Add(temp);
                 }
 

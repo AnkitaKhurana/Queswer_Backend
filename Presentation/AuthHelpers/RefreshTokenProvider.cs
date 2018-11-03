@@ -22,7 +22,7 @@ namespace Presentation.AuthHelpers
             var refreshTokenProperties = new AuthenticationProperties(context.Ticket.Properties.Dictionary)
             {
                 IssuedUtc = context.Ticket.Properties.IssuedUtc,
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
+                ExpiresUtc = DateTime.UtcNow.AddYears(5)
             };
 
             var refreshTokenTicket = new AuthenticationTicket(context.Ticket.Identity, refreshTokenProperties);

@@ -19,6 +19,7 @@ namespace Shared.DTOs
         public UserDTO Author { get; set; }
         public DateTime UploadDate { get; set; }
         public DateTime EditDate { get; set; }
+        public int TotalAnswers { get; set; }
 
         public virtual List<TagDTO> Tags { get; set; }
     }

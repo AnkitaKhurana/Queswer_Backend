@@ -13,6 +13,27 @@ namespace BusinessLogic.Logic
     {
         private QuestionData questionData = new QuestionData();
 
+        /// <summary>
+        /// Find total Questions in DB
+        /// </summary>
+        /// <returns></returns>
+        public int Count()
+        {
+            try
+            {
+                return questionData.Count();
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Find Author ID
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
         public Guid FindAuthorId(Guid questionId)
         {
             try
@@ -125,7 +146,7 @@ namespace BusinessLogic.Logic
         {
             try
             {
-            
+
                 return questionData.All(page, count, searchString);
             }
             catch

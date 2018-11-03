@@ -32,7 +32,6 @@ namespace Presentation.Controllers
             return userLogic.Find(email).Id;
         }
 
-
         /// <summary>
         /// Returns the Email Id of Current Logged in user
         /// </summary>
@@ -73,14 +72,17 @@ namespace Presentation.Controllers
         /// <param name="page"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        [Route("all/{searchString=}/{page=1}/{count=20}")]
+        [Route("all/{searchString=}/{page=1}/{count=10}")]
         [HttpGet]
         public HttpResponseMessage All(int page, int count, string searchString)
         {
             try
             {
                 var questions = questionLogic.All(page, count, searchString);
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questions });
+                int totalQuestions = questions.Count();
+                if (searchString==string.Empty||searchString==null)
+                    totalQuestions = questionLogic.Count();
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questions, totalQuestions });
                 return response;
             }
             catch (Exception e)
@@ -186,7 +188,7 @@ namespace Presentation.Controllers
             try
             {
                 
-                if(questionLogic.Find(Id).Id != CurrentUserId())
+                if(questionLogic.Find(Id).Author.Id != CurrentUserId())
                 {
                     throw new Unauthorised();
                 }
@@ -224,23 +226,23 @@ namespace Presentation.Controllers
         [Route("Edit/{Id}")]
         [HttpPut]
         [Authorize]
-        public HttpResponseMessage Edit(Question question,Guid Id )
+        public HttpResponseMessage Edit([FromBody]Question questionToEdit,[FromUri]Guid Id )
         {
             try
             {
-                if (questionLogic.Find(Id).Id != CurrentUserId())
+                if (questionLogic.Find(Id).Author.Id != CurrentUserId())
                 {
                     throw new Unauthorised();
                 }
-                question.Id = Id;
-                QuestionDTO questionToEdit  = QuestionMapper.ToDTO(question);
-                questionToEdit.Tags = SetTags(question.Tags);
-                QuestionDTO questionDTO = questionLogic.Edit(questionToEdit);
-                if (questionDTO == null)
+                questionToEdit.Id = Id;
+                QuestionDTO questionEdit  = QuestionMapper.ToDTO(questionToEdit);
+                questionEdit.Tags = SetTags(questionToEdit.Tags);
+                QuestionDTO question = questionLogic.Edit(questionEdit);
+                if (question == null)
                 {
                     throw new NoSuchQuestionFound();
                 }
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { questionDTO });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { question });
                 return response;
             }
             catch (Unauthorised e)
@@ -250,7 +252,7 @@ namespace Presentation.Controllers
             }
             catch (NoSuchQuestionFound e)
             {
-                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, new { error = e.Message });
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.BadRequest, new { error = e.Message });
                 return response;
             }
             catch (Exception e)

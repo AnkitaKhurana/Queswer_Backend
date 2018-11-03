@@ -47,6 +47,7 @@ namespace DataAccess.Data
                         answerDTO = AnswerMapper.ToDTO(answerFound);
                         answerDTO.Upvoted = true;
                         answerDTO.Downvoted = false;
+                        db.SaveChanges();
                         return answerDTO;
                     }
                     else if (voteColumn.Status == (int)EntityConstants.VOTE.Downvote)
@@ -86,7 +87,6 @@ namespace DataAccess.Data
                 var voteColumn = db.Voters.Where(x => x.AnswerId == answerId && x.UserId == voterId).FirstOrDefault();
                 if (voteColumn == null)
                 {
-                    answerFound.UpvoteCount++;
                     Vote newVote = new Vote()
                     {
                         Id = Guid.NewGuid(),
@@ -94,6 +94,7 @@ namespace DataAccess.Data
                         AnswerId = answerId,
                         Status = (int)EntityConstants.VOTE.Downvote
                     };
+                    answerFound.DownvoteCount++;
                     db.Voters.Add(newVote);
                 }
                 else
@@ -103,6 +104,7 @@ namespace DataAccess.Data
                         answerDTO = AnswerMapper.ToDTO(answerFound);
                         answerDTO.Upvoted = false;
                         answerDTO.Downvoted = true;
+                        db.SaveChanges();
                         return answerDTO;
                     }
                     else if (voteColumn.Status == (int)EntityConstants.VOTE.Upvote)
@@ -147,10 +149,10 @@ namespace DataAccess.Data
                     if (voteColumn.Status == (int)EntityConstants.VOTE.Upvote)
                     {
                         db.Voters.Remove(voteColumn);
+                        answerFound.UpvoteCount--;
                         answerDTO = AnswerMapper.ToDTO(answerFound);
                         answerDTO.Upvoted = false;
                         answerDTO.Downvoted = false;
-                        answerDTO.UpvoteCount--;
                         db.SaveChanges();
                         return answerDTO;
                     }
@@ -194,10 +196,10 @@ namespace DataAccess.Data
                     if (voteColumn.Status == (int)EntityConstants.VOTE.Downvote)
                     {
                         db.Voters.Remove(voteColumn);
+                        answerFound.DownvoteCount--;
                         answerDTO = AnswerMapper.ToDTO(answerFound);
                         answerDTO.Upvoted = false;
                         answerDTO.Downvoted = false;
-                        answerDTO.DownvoteCount--;
                         db.SaveChanges();
                         return answerDTO;
                     }
