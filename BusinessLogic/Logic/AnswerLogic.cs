@@ -13,7 +13,11 @@ namespace BusinessLogic.Logic
     {
         private AnswerData answerData = new AnswerData();
 
-
+        /// <summary>
+        /// Find author by answer id
+        /// </summary>
+        /// <param name="answerId"></param>
+        /// <returns></returns>
         public Guid FindAuthorId(Guid answerId)
         {
             try

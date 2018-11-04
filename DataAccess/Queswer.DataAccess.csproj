@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\AnswerData.cs" />
+    <Compile Include="Data\FollowData.cs" />
     <Compile Include="Data\QuestionData.cs" />
     <Compile Include="Data\TagData.cs" />
     <Compile Include="Data\UserData.cs" />
